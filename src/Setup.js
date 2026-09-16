@@ -92,6 +92,8 @@ function setupDatabase() {
 
   initializeConfig_(spreadsheet);
 
+  removeDefaultSheetIfEmpty_(spreadsheet);
+
   console.log(
     `Database initialized successfully. Schema version: ${DATABASE.VERSION}`
   );
@@ -173,4 +175,51 @@ function initializeConfig_(spreadsheet) {
     'ENVIRONMENT',
     'DEV',
   ]);
+}
+
+/**
+ * Removes Google's default spreadsheet sheet when it is empty.
+ *
+ * The function intentionally avoids deleting sheets containing data
+ * to prevent accidental information loss.
+ *
+ * @param {GoogleAppsScript.Spreadsheet.Spreadsheet} spreadsheet
+ */
+function removeDefaultSheetIfEmpty_(spreadsheet) {
+  const possibleDefaultNames = [
+    'Página1',
+    'Página 1',
+    'Sheet1',
+  ];
+
+  for (const sheetName of possibleDefaultNames) {
+    const sheet = spreadsheet.getSheetByName(sheetName);
+
+    if (!sheet) {
+      continue;
+    }
+
+    const hasData =
+      sheet.getLastRow() > 0 ||
+      sheet.getLastColumn() > 0;
+
+    if (hasData) {
+      console.log(
+        `Default sheet "${sheetName}" was preserved because it contains data.`
+      );
+
+      continue;
+    }
+
+    // Google Sheets requires at least one sheet to exist.
+    if (spreadsheet.getSheets().length <= 1) {
+      continue;
+    }
+
+    spreadsheet.deleteSheet(sheet);
+
+    console.log(
+      `Empty default sheet "${sheetName}" removed.`
+    );
+  }
 }
