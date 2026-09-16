@@ -1,0 +1,46 @@
+# ============================================================
+# Maikeise Quotations
+# Git ignore rules
+# ============================================================
+
+# Google Apps Script / clasp
+.clasp.json
+.clasprc.json
+
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Operating System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Local / private data
+data/
+private/
+secrets/
+credentials/
+
+# Real quotation exports
+exports/
+backups/
