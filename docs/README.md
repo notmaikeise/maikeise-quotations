@@ -1,9 +1,9 @@
-# Maikeise's Ware — Documentation
+# Maikeise — Documentation
 
 > **Sistema de Gestão e Pesquisa de Cotações**  
 > **Quotation Management & Search System**
 
-Documentação técnica oficial do projeto desenvolvido pela **Maikeise's Ware**.
+Documentação técnica oficial do projeto desenvolvido pela **Maikeise**.
 
 Este diretório centraliza a documentação de arquitetura, domínio, decisões técnicas, modelo de dados e evolução do Sistema de Gestão e Pesquisa de Cotações.
 
@@ -13,7 +13,7 @@ Este diretório centraliza a documentação de arquitetura, domínio, decisões 
 
 ### Sobre o projeto
 
-O **Sistema de Gestão e Pesquisa de Cotações** é uma solução desenvolvida pela **Maikeise's Ware** para digitalizar, organizar e facilitar a consulta de cotações comerciais.
+O **Sistema de Gestão e Pesquisa de Cotações** é uma solução desenvolvida pela **Maikeise** para digitalizar, organizar e facilitar a consulta de cotações comerciais.
 
 O projeto foi concebido inicialmente para substituir a consulta manual de um acervo histórico de documentos, permitindo que informações relevantes sejam cadastradas de maneira estruturada e posteriormente localizadas através de uma interface de pesquisa.
 
@@ -130,7 +130,7 @@ Credenciais, informações confidenciais e dados comerciais reais não devem ser
 
 ### Responsabilidade
 
-**Organização:** Maikeise's Ware  
+**Organização:** Maikeise  
 **Projeto:** Sistema de Gestão e Pesquisa de Cotações  
 **Baseline inicial:** 16 de setembro de 2026  
 **Versão da documentação:** `1.0`
@@ -143,7 +143,7 @@ Credenciais, informações confidenciais e dados comerciais reais não devem ser
 
 ### About the project
 
-The **Quotation Management & Search System** is a solution developed by **Maikeise's Ware** to digitize, organize, and simplify access to commercial quotation records.
+The **Quotation Management & Search System** is a solution developed by **Maikeise** to digitize, organize, and simplify access to commercial quotation records.
 
 The project was initially designed to replace manual searches across a historical collection of documents by providing structured data registration and a searchable interface.
 
@@ -260,7 +260,7 @@ Credentials, confidential information and real commercial data must never be com
 
 ### Ownership
 
-**Organization:** Maikeise's Ware  
+**Organization:** Maikeise  
 **Project:** Quotation Management & Search System  
 **Initial baseline:** September 16, 2026  
 **Documentation version:** `1.0`
@@ -276,6 +276,6 @@ Real quotation records, supplier information, credentials, authentication tokens
 ---
 
 <p align="center">
-  <strong>Maikeise's Ware</strong><br>
+  <strong>Maikeise</strong><br>
   Software • Systems • Solutions
 </p>
