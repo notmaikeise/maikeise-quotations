@@ -1,98 +1,227 @@
-# Maikeise — Documentation
+# Maikeise Quotations
 
 > **Sistema de Gestão e Pesquisa de Cotações**  
 > **Quotation Management & Search System**
 
-Documentação técnica oficial do projeto desenvolvido pela **Maikeise**.
-
-Este diretório centraliza a documentação de arquitetura, domínio, decisões técnicas, modelo de dados e evolução do Sistema de Gestão e Pesquisa de Cotações.
+`v1.0.0` • `Concluído` • `Entregue` • `Google Apps Script` • `Google Sheets` • `HTML` • `CSS` • `JavaScript`
 
 ---
 
 ## 🇧🇷 Português
 
-### Sobre o projeto
+### ✦ Sobre o projeto
 
-O **Sistema de Gestão e Pesquisa de Cotações** é uma solução desenvolvida pela **Maikeise** para digitalizar, organizar e facilitar a consulta de cotações comerciais.
+O **Maikeise Quotations** é uma solução desenvolvida pela **Maikeise** para tornar o processo de registro, organização e consulta de cotações comerciais mais simples, estruturado e acessível.
 
-O projeto foi concebido inicialmente para substituir a consulta manual de um acervo histórico de documentos, permitindo que informações relevantes sejam cadastradas de maneira estruturada e posteriormente localizadas através de uma interface de pesquisa.
+O projeto nasceu de uma necessidade real: substituir a busca manual em um acervo histórico de documentos por uma aplicação capaz de centralizar informações relevantes e permitir que elas sejam localizadas rapidamente por meio de uma interface web.
 
-A primeira versão utiliza exclusivamente tecnologias do ecossistema Google:
+A primeira versão foi construída com foco em três pilares:
 
-- Google Apps Script
-- Google Sheets
-- HTML
-- CSS
-- JavaScript
+> **simplicidade operacional**, **organização técnica** e **possibilidade de evolução**.
 
-A arquitetura foi planejada para manter baixo custo operacional, simplicidade de implantação e possibilidade de evolução futura.
+Sem infraestrutura desnecessária para o contexto atual, o sistema utiliza tecnologias do ecossistema Google e uma arquitetura em camadas, mantendo interface, aplicação, domínio e persistência com responsabilidades bem definidas.
 
 ---
 
-### Documentação
+## ✨ Versão atual
+
+### `v1.0.0 — Primeira entrega oficial`
+
+**Status:** ✅ Concluída e entregue  
+**Data:** 16 de setembro de 2026
+
+A primeira versão funcional do sistema permite:
+
+- cadastrar cotações comerciais;
+- validar dados antes da persistência;
+- calcular automaticamente o valor total;
+- registrar informações comerciais obrigatórias;
+- registrar informações adicionais e opcionais;
+- pesquisar por **RFP**;
+- pesquisar por **Código do item**;
+- retornar múltiplas cotações para uma mesma pesquisa;
+- visualizar todos os dados relevantes de uma cotação;
+- consultar informações adicionais em **Ver detalhes**;
+- manter identificadores técnicos ocultos do usuário final;
+- alternar a interface entre **Português** e **Inglês**;
+- utilizar a aplicação em diferentes tamanhos de tela;
+- persistir os dados através do Google Sheets.
+
+---
+
+## 🧭 Fluxo principal
+
+```text
+Cadastro
+   ↓
+Validação
+   ↓
+QuotationService
+   ↓
+Persistência
+   ↓
+Google Sheets
+   ↓
+Consulta
+   ↓
+Lista de resultados
+   ↓
+Ver detalhes
+```
+
+A interface web não acessa diretamente a planilha.
+
+```text
+Interface Web
+    ↓
+WebController
+    ↓
+Application
+    ↓
+Domain
+    ↓
+Repository
+    ↓
+Google Sheets
+```
+
+---
+
+## 🧩 Tecnologias
+
+| Camada | Tecnologia |
+|---|---|
+| Interface | HTML, CSS, JavaScript |
+| Backend | Google Apps Script |
+| Persistência | Google Sheets |
+| Versionamento | Git + GitHub |
+| Deploy | Google Apps Script Web App |
+| Documentação | Markdown |
+
+A escolha tecnológica foi feita para manter **baixo custo operacional**, implantação simples e manutenção acessível, sem impedir uma futura migração para outra infraestrutura caso o produto cresça.
+
+---
+
+## 📚 Documentação
+
+A documentação acompanha a evolução técnica do projeto e registra tanto decisões quanto entregas.
 
 | Documento | Versão | Status | Descrição |
 |---|---:|---|---|
-| DDD / Pré-Projeto de Arquitetura | `1.0` | Baseline | Definição inicial do domínio, arquitetura, regras de negócio e roadmap |
-| Modelo de Dados | — | Planejado | Estrutura e relacionamento dos dados |
-| ADRs | — | Em evolução | Registro das decisões arquiteturais |
-| Changelog | — | Planejado | Histórico das alterações do projeto |
+| DDD / Pré-Projeto de Arquitetura | `1.0` | ✅ Baseline | Definição inicial do domínio, arquitetura, regras e roadmap |
+| ADR-001 | `1.0` | ✅ Aceito | Escolha de Google Apps Script + Google Sheets |
+| Design System | `0.1` | ✅ Ativo | Identidade visual, acessibilidade e padrões de interface |
+| Sprint 00 | — | ✅ Concluída | Preparação do projeto, estrutura inicial e ambiente |
+| Sprint 01 | — | ✅ Concluída | Domínio, validações, persistência e fluxo de cadastro |
+| Sprint 02 | — | ✅ Concluída | Interface web, pesquisa e visualização detalhada |
+| Changelog | — | 💡 Recomendado | Histórico das versões públicas do projeto |
 
 ---
 
-### Estrutura documental
+## 🗂️ Estrutura documental
 
 ```text
 docs/
 │
 ├── README.md
 │
-├── Maikeises_Ware_DDD_PreProjeto_Sistema_Cotacoes_v1.0.pdf
-│
-├── architecture/
-│
 ├── adr/
+│   └── ADR-001-...
+│
+├── design/
+│   ├── design-system-v0.1-PT-BR.md
+│   └── design-system-v0.1-EN.md
+│
+├── sprints/
+│   ├── sprint-00-...
+│   ├── sprint-01-...
+│   ├── sprint-02-web-registration-and-search-PT-BR.md
+│   └── sprint-02-web-registration-and-search-EN.md
 │
 └── versions/
 ```
 
-A estrutura poderá crescer conforme novas decisões e versões do sistema forem desenvolvidas.
+A estrutura pode crescer junto com o sistema, sem apagar o histórico das decisões anteriores.
 
 ---
 
-### Versionamento
+## 🏗️ Princípios de engenharia
 
-A documentação utiliza versionamento para preservar o histórico de evolução do projeto.
+### Simplicidade
 
-Exemplos:
+Usar apenas a infraestrutura necessária para resolver o problema atual.
 
-```text
-v1.0  → Arquitetura inicial / Baseline
-v1.1  → Pequenas evoluções
-v1.2  → Novos recursos compatíveis
-v2.0  → Mudanças significativas de arquitetura ou domínio
-```
+### Rastreabilidade
 
-Documentos antigos não devem ser substituídos quando representarem uma versão formal já aprovada.
+Decisões relevantes devem permanecer registradas e compreensíveis ao longo do tempo.
 
-Novas versões deverão ser adicionadas ao histórico documental.
+### Manutenibilidade
+
+Interface, aplicação, domínio e infraestrutura devem continuar possuindo responsabilidades claras.
+
+### Integridade dos dados
+
+Dados comerciais devem ser validados antes de serem persistidos.
+
+### Evolução incremental
+
+Novas funcionalidades devem ser adicionadas sem comprometer uma versão já estável.
+
+### Segurança e privacidade
+
+Dados reais de clientes, fornecedores, credenciais, tokens, IDs privados e informações comerciais sensíveis **não devem ser versionados no repositório público**.
 
 ---
 
-### Architecture Decision Records
+## 🔭 Próximos passos e sugestões
 
-Decisões arquiteturais importantes serão registradas através de **ADRs — Architecture Decision Records**.
+A `v1.0.0` representa o escopo necessário para a primeira entrega e está funcional. As ideias abaixo ficam registradas como **possíveis evoluções**, não como pendências da versão entregue.
 
-Exemplos:
+### Gestão de cotações
+
+- [ ] Editar uma cotação já cadastrada
+- [ ] Desativar uma cotação sem removê-la definitivamente
+- [ ] Exibir histórico de alterações por cotação
+- [ ] Criar uma visualização de auditoria mais completa
+
+### Pesquisa
+
+- [ ] Adicionar filtros avançados
+- [ ] Permitir busca parcial quando fizer sentido para o negócio
+- [ ] Ordenar resultados por data, fornecedor ou valor
+- [ ] Implementar paginação para grandes volumes de dados
+
+### Dados e documentos
+
+- [ ] Avaliar importação de registros históricos
+- [ ] Avaliar digitalização e OCR para documentos antigos
+- [ ] Criar rotinas de exportação e backup
+- [ ] Avaliar migração da persistência caso o volume ultrapasse o cenário adequado ao Google Sheets
+
+### Produto
+
+- [ ] Melhorar dashboards e indicadores
+- [ ] Criar perfis de acesso caso mais usuários passem a utilizar o sistema
+- [ ] Expandir internacionalização
+- [ ] Avaliar notificações e integrações com outros sistemas
+
+---
+
+## 🧠 Decisões futuras
+
+Novas decisões relevantes podem ser registradas através de **ADRs — Architecture Decision Records**.
+
+Sugestões:
 
 ```text
-ADR-001 — Google Apps Script + Google Sheets
-ADR-002 — Estrutura de dados opcionais
-ADR-003 — Estratégia de pesquisa
+ADR-002 — Estrutura e evolução dos dados opcionais
+ADR-003 — Estratégia de pesquisa e filtros avançados
 ADR-004 — Digitalização e OCR
+ADR-005 — Estratégia de edição e auditoria
+ADR-006 — Migração da camada de persistência
 ```
 
-Cada ADR deverá registrar:
+Cada ADR deve registrar:
 
 - contexto;
 - problema;
@@ -100,182 +229,252 @@ Cada ADR deverá registrar:
 - decisão;
 - consequências;
 - impacto técnico;
-- data e versão relacionada.
+- versão relacionada.
 
 ---
 
-### Princípios do projeto
+## 🏷️ Versionamento
 
-O desenvolvimento deverá priorizar:
+O projeto utiliza versionamento para preservar a evolução do sistema.
 
-**Simplicidade**  
-Evitar infraestrutura desnecessária para o volume e contexto atual.
+```text
+v1.0.0  → Primeira versão funcional entregue
+v1.1.0  → Novas funcionalidades compatíveis
+v1.x.x  → Melhorias e correções
+v2.0.0  → Mudanças relevantes de arquitetura ou domínio
+```
 
-**Rastreabilidade**  
-Decisões importantes devem permanecer documentadas.
+Versões já entregues devem permanecer preservadas.
 
-**Manutenibilidade**  
-Interface, domínio, aplicação e persistência devem possuir responsabilidades bem definidas.
-
-**Integridade dos dados**  
-Informações comerciais devem ser validadas antes da persistência.
-
-**Evolução incremental**  
-Novos recursos devem ser incorporados sem comprometer a estabilidade da solução existente.
-
-**Segurança**  
-Credenciais, informações confidenciais e dados comerciais reais não devem ser versionados no repositório.
+Novas funcionalidades devem seguir o fluxo de desenvolvimento sem alterar silenciosamente a versão utilizada pelo cliente.
 
 ---
 
-### Responsabilidade
+## 💛 Uma nota pessoal
 
-**Organização:** Maikeise  
-**Projeto:** Sistema de Gestão e Pesquisa de Cotações  
-**Baseline inicial:** 16 de setembro de 2026  
-**Versão da documentação:** `1.0`
+Este projeto tem um significado especial para mim.
+
+Ver uma necessidade real sair de uma conversa, passar por planejamento, arquitetura, domínio, código, erros, testes, interface e finalmente se transformar em algo **funcionando e sendo utilizado de verdade** foi uma experiência que me deixou muito feliz.
+
+Mais do que concluir um sistema, este projeto representa uma etapa importante da **Maikeise** e também da minha evolução como desenvolvedora.
+
+Tenho muito orgulho da `v1.0.0` e de tudo o que aprendi construindo cada parte dela.
+
+Espero que este seja apenas o primeiro de muitos projetos, clientes, desafios e oportunidades que ainda virão — e que o **Maikeise Quotations** ajude a abrir caminho para futuros cada vez maiores.
+
+> Que esta primeira entrega seja menos um ponto final  
+> e mais o começo de tudo o que ainda pode ser construído.
+
+---
+
+## 👩‍💻 Responsabilidade
+
+| | |
+|---|---|
+| **Organização** | Maikeise |
+| **Projeto** | Maikeise Quotations |
+| **Responsável técnica** | Anny Maikeise |
+| **Primeira entrega** | 16 de setembro de 2026 |
+| **Release** | `v1.0.0` |
 
 ---
 
 <br>
 
-## 🇺🇸 English
+# 🇺🇸 English
 
-### About the project
+## ✦ About the project
 
-The **Quotation Management & Search System** is a solution developed by **Maikeise** to digitize, organize, and simplify access to commercial quotation records.
+**Maikeise Quotations** is a solution developed by **Maikeise** to make commercial quotation registration, organization, and retrieval simpler, more structured, and easier to use.
 
-The project was initially designed to replace manual searches across a historical collection of documents by providing structured data registration and a searchable interface.
+The project was born from a real need: replacing manual searches through historical quotation documents with an application capable of centralizing relevant information and making it quickly searchable through a web interface.
 
-The first version is based exclusively on technologies from the Google ecosystem:
+The first release was designed around three core principles:
 
-- Google Apps Script
-- Google Sheets
-- HTML
-- CSS
-- JavaScript
+> **operational simplicity**, **technical organization**, and **room for evolution**.
 
-The architecture prioritizes low operational cost, straightforward deployment, maintainability, and future scalability.
+The system avoids unnecessary infrastructure for its current context while preserving a layered architecture with clear responsibilities across the interface, application, domain, and persistence layers.
 
 ---
 
-### Documentation
+## ✨ Current release
 
-| Document | Version | Status | Description |
-|---|---:|---|---|
-| DDD / Architecture Pre-Project | `1.0` | Baseline | Initial domain, architecture, business rules and roadmap |
-| Data Model | — | Planned | Data structure and relationships |
-| ADRs | — | Evolving | Architecture Decision Records |
-| Changelog | — | Planned | Project change history |
+### `v1.0.0 — First official delivery`
+
+**Status:** ✅ Completed and delivered  
+**Date:** September 16, 2026
+
+The first functional version provides:
+
+- quotation registration;
+- data validation;
+- automatic total value calculation;
+- required commercial information;
+- flexible additional information;
+- search by **RFP**;
+- search by **Item Code**;
+- multiple results for the same search value;
+- complete quotation details;
+- additional data in the details view;
+- hidden technical identifiers;
+- **Portuguese / English** interface support;
+- responsive interface;
+- Google Sheets persistence.
 
 ---
 
-### Documentation structure
+## 🧭 Main flow
 
 ```text
-docs/
-│
-├── README.md
-│
-├── Maikeises_Ware_DDD_PreProjeto_Sistema_Cotacoes_v1.0.pdf
-│
-├── architecture/
-│
-├── adr/
-│
-└── versions/
+Registration
+    ↓
+Validation
+    ↓
+QuotationService
+    ↓
+Persistence
+    ↓
+Google Sheets
+    ↓
+Search
+    ↓
+Result list
+    ↓
+View details
 ```
 
-This structure may evolve as new architectural decisions and system versions are introduced.
-
----
-
-### Versioning
-
-Documentation is versioned to preserve the project's technical history.
-
-Examples:
+The web interface does not communicate with the spreadsheet directly.
 
 ```text
-v1.0  → Initial Architecture / Baseline
-v1.1  → Minor improvements
-v1.2  → Compatible feature additions
-v2.0  → Significant architecture or domain changes
+Web Interface
+    ↓
+WebController
+    ↓
+Application
+    ↓
+Domain
+    ↓
+Repository
+    ↓
+Google Sheets
 ```
-
-Approved historical documents should not be overwritten.
-
-New versions should be added to the documentation history.
 
 ---
 
-### Architecture Decision Records
+## 🧩 Technology stack
 
-Important architectural decisions will be documented using **ADRs — Architecture Decision Records**.
+| Layer | Technology |
+|---|---|
+| Interface | HTML, CSS, JavaScript |
+| Backend | Google Apps Script |
+| Persistence | Google Sheets |
+| Version control | Git + GitHub |
+| Deployment | Google Apps Script Web App |
+| Documentation | Markdown |
 
-Examples:
-
-```text
-ADR-001 — Google Apps Script + Google Sheets
-ADR-002 — Optional Data Structure
-ADR-003 — Search Strategy
-ADR-004 — Document Digitalization and OCR
-```
-
-Each ADR should document:
-
-- context;
-- problem;
-- considered alternatives;
-- decision;
-- consequences;
-- technical impact;
-- related date and version.
+The stack was selected to provide **low operational cost**, simple deployment, and accessible maintenance while keeping the architecture open to future migration if the system grows.
 
 ---
 
-### Engineering principles
+## 🔭 Future improvements
 
-Development should prioritize:
+The `v1.0.0` release fulfills the initial delivery scope. The following items are ideas for future versions rather than unfinished requirements.
+
+### Quotation management
+
+- [ ] Edit existing quotations
+- [ ] Deactivate quotations without permanently deleting them
+- [ ] Display quotation change history
+- [ ] Expand audit visualization
+
+### Search
+
+- [ ] Advanced filters
+- [ ] Partial search where appropriate
+- [ ] Result sorting
+- [ ] Pagination for larger datasets
+
+### Data and documents
+
+- [ ] Historical data import
+- [ ] OCR and document digitization research
+- [ ] Export and backup routines
+- [ ] Persistence migration if the project outgrows Google Sheets
+
+### Product evolution
+
+- [ ] Dashboards and indicators
+- [ ] Access profiles and permissions
+- [ ] Expanded internationalization
+- [ ] Notifications and external integrations
+
+---
+
+## 🏗️ Engineering principles
 
 **Simplicity**  
-Avoid unnecessary infrastructure for the current project requirements.
+Use only the infrastructure required by the current problem.
 
 **Traceability**  
-Important technical decisions should remain documented.
+Relevant technical decisions should remain documented.
 
 **Maintainability**  
-UI, domain, application and persistence responsibilities should remain separated.
+UI, application, domain, and infrastructure responsibilities should remain separated.
 
 **Data integrity**  
-Commercial information must be validated before persistence.
+Commercial data must be validated before persistence.
 
 **Incremental evolution**  
-New capabilities should be introduced without compromising existing functionality.
+New capabilities should not compromise a stable released version.
 
-**Security**  
-Credentials, confidential information and real commercial data must never be committed to the repository.
+**Security and privacy**  
+Real quotation records, supplier information, credentials, tokens, private IDs, and confidential business data must not be committed to the public repository.
 
 ---
 
-### Ownership
+## 💛 A personal note
 
-**Organization:** Maikeise  
-**Project:** Quotation Management & Search System  
-**Initial baseline:** September 16, 2026  
-**Documentation version:** `1.0`
+This project means a lot to me.
+
+Seeing a real need evolve from an idea into planning, architecture, domain modeling, code, debugging, testing, interface design, and finally a system that is **working and being used in practice** made me genuinely happy.
+
+More than finishing an application, this project represents an important milestone for **Maikeise** and for my own growth as a developer.
+
+I am proud of this first release and of everything I learned while building it.
+
+I hope this is only the beginning of many more projects, clients, challenges, and opportunities — and that **Maikeise Quotations** helps open the door to an even bigger future.
+
+> May this first delivery be less of an ending  
+> and more of the beginning of everything still to come.
+
+---
+
+## 👩‍💻 Ownership
+
+| | |
+|---|---|
+| **Organization** | Maikeise |
+| **Project** | Maikeise Quotations |
+| **Technical owner** | Anny Maikeise |
+| **First delivery** | September 16, 2026 |
+| **Release** | `v1.0.0` |
 
 ---
 
 ## Repository Notice
 
-This repository contains the source code and technical documentation for the project.
+This repository contains source code and technical documentation for the project.
 
-Real quotation records, supplier information, credentials, authentication tokens and other confidential commercial data are intentionally excluded from version control.
+Real quotation records, supplier information, credentials, authentication tokens, spreadsheet identifiers, deployment URLs, and other confidential commercial data are intentionally excluded from version control.
 
 ---
 
-<p align="center">
-  <strong>Maikeise</strong><br>
-  Software • Systems • Solutions
-</p>
+<div align="center">
+
+### **MAIKEISE**
+
+**Software • Systems • Solutions**
+
+`From a real need to a real solution.`
+
+</div>
