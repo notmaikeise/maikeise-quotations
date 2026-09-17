@@ -5,171 +5,2086 @@
     <base target="_top">
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Maikeise Quotations</title>
+
+    <style>
+        :root {
+            --primary: #203740;
+            --primary-hover: #294852;
+            --accent: #F2A81D;
+
+            --background: #F2F2F2;
+            --surface: #FFFFFF;
+            --surface-soft: #F8FAFA;
+
+            --text: #203740;
+            --text-secondary: #68777C;
+
+            --border: #DCE3E5;
+            --border-strong: #C7D1D4;
+
+            --success: #18794E;
+            --success-soft: #ECFDF3;
+
+            --warning: #8A5A00;
+            --warning-soft: #FFF8E7;
+
+            --danger: #B42318;
+            --danger-soft: #FFF4F2;
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+
+            --shadow-header: 0 1px 10px rgba(32, 55, 64, 0.06);
+            --shadow-card:
+                0 1px 2px rgba(32, 55, 64, 0.03),
+                0 14px 40px rgba(32, 55, 64, 0.06);
+
+            --content-width: 1320px;
+            --transition: 180ms ease;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background: var(--background);
+            color: var(--text);
+
+            font-family:
+                Inter,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:disabled {
+            cursor: wait;
+            opacity: 0.7;
+        }
+
+        .mono {
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+
+        /* =========================================
+           APP HEADER
+           ========================================= */
+
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+
+            width: 100%;
+
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-header);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .app-header__content {
+            width: min(calc(100% - 64px), var(--content-width));
+            min-height: 78px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            gap: 42px;
+        }
+
+        .brand {
+            flex-shrink: 0;
+
+            color: var(--primary);
+
+            font-size: 1.08rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+
+            user-select: none;
+        }
+
+        .main-navigation {
+            align-self: stretch;
+
+            display: flex;
+            align-items: stretch;
+            gap: 4px;
+        }
+
+        .navigation-button {
+            position: relative;
+
+            min-width: 118px;
+            padding: 0 18px;
+
+            border: 0;
+            background: transparent;
+
+            color: var(--text-secondary);
+
+            font-weight: 600;
+
+            transition:
+                color var(--transition),
+                background var(--transition);
+        }
+
+        .navigation-button:hover {
+            color: var(--primary);
+            background: rgba(32, 55, 64, 0.035);
+        }
+
+        .navigation-button::after {
+            content: "";
+
+            position: absolute;
+            right: 18px;
+            bottom: 0;
+            left: 18px;
+
+            height: 3px;
+
+            border-radius: 3px 3px 0 0;
+            background: var(--accent);
+
+            transform: scaleX(0);
+
+            transition: transform var(--transition);
+        }
+
+        .navigation-button.is-active {
+            color: var(--primary);
+        }
+
+        .navigation-button.is-active::after {
+            transform: scaleX(1);
+        }
+
+        .header-actions {
+            margin-left: auto;
+
+            display: flex;
+            align-items: center;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 2px;
+
+            padding: 4px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: #EEF2F3;
+        }
+
+        .language-button {
+            min-width: 46px;
+            min-height: 38px;
+
+            border: 0;
+            border-radius: 7px;
+
+            background: transparent;
+            color: var(--text-secondary);
+
+            font-size: 0.82rem;
+            font-weight: 800;
+
+            transition:
+                background var(--transition),
+                color var(--transition),
+                box-shadow var(--transition);
+        }
+
+        .language-button.is-active {
+            background: var(--primary);
+            color: #FFFFFF;
+
+            box-shadow: 0 2px 8px rgba(32, 55, 64, 0.18);
+        }
+
+
+        /* =========================================
+           MAIN AREA
+           ========================================= */
+
+        .app-main {
+            width: min(calc(100% - 64px), var(--content-width));
+
+            margin: 0 auto;
+            padding: 52px 0 96px;
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.is-active {
+            display: block;
+
+            animation: view-enter 220ms ease;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 10px;
+
+            color: var(--warning);
+
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+
+            width: 24px;
+            height: 3px;
+
+            border-radius: 99px;
+            background: var(--accent);
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+
+            color: var(--primary);
+
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            font-weight: 760;
+            line-height: 1.12;
+            letter-spacing: -0.04em;
+        }
+
+        .page-header p {
+            max-width: 760px;
+            margin: 0;
+
+            color: var(--text-secondary);
+
+            font-size: 1.04rem;
+        }
+
+        .placeholder-panel {
+            min-height: 270px;
+
+            display: grid;
+            place-items: center;
+
+            padding: 40px;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            background: var(--surface);
+            box-shadow: var(--shadow-card);
+
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+
+        /* =========================================
+           FORM
+           ========================================= */
+
+        .quotation-form {
+            display: grid;
+            gap: 22px;
+        }
+
+        .form-panel {
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            background: var(--surface);
+            box-shadow: var(--shadow-card);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+
+            padding: 26px 28px 20px;
+
+            border-bottom: 1px solid #E9EEEE;
+        }
+
+        .panel-number {
+            flex: 0 0 auto;
+
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: var(--primary);
+            color: #FFFFFF;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+
+        .panel-heading h2 {
+            margin: 0 0 3px;
+
+            color: var(--primary);
+
+            font-size: 1.12rem;
+            font-weight: 760;
+            letter-spacing: -0.015em;
+        }
+
+        .panel-heading p {
+            margin: 0;
+
+            color: var(--text-secondary);
+
+            font-size: 0.92rem;
+        }
+
+        .panel-body {
+            padding: 28px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 22px 20px;
+        }
+
+        .field {
+            min-width: 0;
+            grid-column: span 6;
+        }
+
+        .field.third {
+            grid-column: span 4;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--primary);
+
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .required-mark {
+            margin-left: 2px;
+
+            color: var(--warning);
+        }
+
+        .field input,
+        .field textarea,
+        .field select {
+            width: 100%;
+            min-height: 52px;
+
+            padding: 13px 15px;
+
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            outline: none;
+
+            background: #FFFFFF;
+            color: var(--text);
+
+            transition:
+                border-color var(--transition),
+                box-shadow var(--transition),
+                background var(--transition);
+        }
+
+        .field textarea {
+            min-height: 112px;
+
+            resize: vertical;
+        }
+
+        .field input:hover,
+        .field textarea:hover,
+        .field select:hover {
+            border-color: #AEBCC0;
+        }
+
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus {
+            border-color: var(--primary);
+
+            box-shadow: 0 0 0 4px rgba(32, 55, 64, 0.10);
+        }
+
+        .field.is-invalid input,
+        .field.is-invalid textarea,
+        .field.is-invalid select {
+            border-color: var(--danger);
+
+            background: #FFFCFC;
+
+            box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.08);
+        }
+
+        .field-hint {
+            margin-top: 7px;
+
+            color: var(--text-secondary);
+
+            font-size: 0.82rem;
+        }
+
+        .field-error {
+            display: none;
+
+            margin-top: 7px;
+
+            color: var(--danger);
+
+            font-size: 0.84rem;
+            font-weight: 650;
+        }
+
+        .field.is-invalid .field-error {
+            display: block;
+        }
+
+
+        /* =========================================
+           TOTAL VALUE
+           ========================================= */
+
+        .total-card {
+            height: 100%;
+            min-height: 94px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 18px 20px;
+
+            border: 1px solid rgba(242, 168, 29, 0.42);
+            border-radius: 12px;
+
+            background:
+                linear-gradient(135deg,
+                    #FFF9EC 0%,
+                    #FFFDF8 100%);
+        }
+
+        .total-card__label {
+            margin-bottom: 5px;
+
+            color: var(--warning);
+
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .total-card__value {
+            color: var(--primary);
+
+            font-size: 1.7rem;
+            font-weight: 780;
+            line-height: 1.15;
+            letter-spacing: -0.035em;
+        }
+
+
+        /* =========================================
+           ADDITIONAL INFORMATION
+           ========================================= */
+
+        .additional-groups {
+            display: grid;
+            gap: 28px;
+        }
+
+        .additional-group+.additional-group {
+            padding-top: 26px;
+
+            border-top: 1px solid #E8EDEE;
+        }
+
+        .additional-group__title {
+            margin: 0 0 4px;
+
+            color: var(--primary);
+
+            font-size: 0.98rem;
+            font-weight: 800;
+        }
+
+        .additional-group__description {
+            margin: 0 0 18px;
+
+            color: var(--text-secondary);
+
+            font-size: 0.88rem;
+        }
+
+
+        /* =========================================
+           ACTIONS / MESSAGES
+           ========================================= */
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding: 24px 28px;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            background: var(--surface);
+            box-shadow: var(--shadow-card);
+        }
+
+        #form-message {
+            flex: 1;
+
+            min-height: 24px;
+
+            color: var(--text-secondary);
+
+            white-space: pre-line;
+        }
+
+        #form-message[data-type="error"] {
+            color: var(--danger);
+
+            font-weight: 650;
+        }
+
+        #form-message[data-type="success"] {
+            color: var(--success);
+
+            font-weight: 650;
+        }
+
+        #form-message[data-type="warning"] {
+            color: var(--warning);
+
+            font-weight: 650;
+        }
+
+        .primary-button {
+            min-width: 190px;
+            min-height: 52px;
+
+            padding: 0 24px;
+
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+
+            background: var(--primary);
+            color: #FFFFFF;
+
+            font-weight: 750;
+
+            box-shadow: 0 8px 18px rgba(32, 55, 64, 0.15);
+
+            transition:
+                transform var(--transition),
+                background var(--transition),
+                box-shadow var(--transition);
+        }
+
+        .primary-button:hover:not(:disabled) {
+            background: var(--primary-hover);
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 10px 22px rgba(32, 55, 64, 0.19);
+        }
+
+
+        /* =========================================
+           SUCCESS SUMMARY
+           ========================================= */
+
+        .success-summary {
+            margin-bottom: 22px;
+
+            padding: 22px 24px;
+
+            border: 1px solid #B9E5CD;
+            border-radius: var(--radius-md);
+
+            background: var(--success-soft);
+        }
+
+        .success-summary__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+
+            margin-bottom: 18px;
+        }
+
+        .success-summary__header h2 {
+            margin: 0 0 3px;
+
+            color: var(--success);
+
+            font-size: 1.05rem;
+        }
+
+        .success-summary__header p {
+            margin: 0;
+
+            color: #3C7058;
+
+            font-size: 0.9rem;
+        }
+
+        .success-summary__grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .summary-item {
+            min-width: 0;
+        }
+
+        .summary-item span {
+            display: block;
+
+            margin-bottom: 3px;
+
+            color: #557663;
+
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .summary-item strong {
+            display: block;
+
+            overflow-wrap: anywhere;
+
+            color: var(--primary);
+
+            font-size: 0.94rem;
+        }
+
+        .summary-close {
+            width: 38px;
+            height: 38px;
+
+            flex: 0 0 auto;
+
+            border: 1px solid #B9E5CD;
+            border-radius: 9px;
+
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--success);
+
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+
+        /* =========================================
+           TOAST
+           ========================================= */
+
+        .toast {
+            position: fixed;
+            right: 28px;
+            bottom: 28px;
+            z-index: 100;
+
+            width: min(390px, calc(100vw - 32px));
+
+            padding: 16px 18px;
+
+            border: 1px solid #B9E5CD;
+            border-radius: 13px;
+
+            background: var(--success-soft);
+            color: var(--success);
+
+            box-shadow: 0 18px 45px rgba(32, 55, 64, 0.18);
+
+            font-weight: 700;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transform: translateY(20px);
+
+            transition:
+                opacity 220ms ease,
+                transform 220ms ease;
+        }
+
+        .toast.is-visible {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           ACCESSIBILITY
+           ========================================= */
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible {
+            outline: 3px solid rgba(242, 168, 29, 0.45);
+            outline-offset: 2px;
+        }
+
+        @keyframes view-enter {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+
+        @media (max-width: 980px) {
+
+            .field,
+            .field.third {
+                grid-column: span 6;
+            }
+
+            .field.full {
+                grid-column: 1 / -1;
+            }
+
+            .success-summary__grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .app-header__content {
+                width: min(calc(100% - 32px), var(--content-width));
+
+                flex-wrap: wrap;
+                gap: 0;
+
+                padding: 14px 0;
+            }
+
+            .brand {
+                margin-right: auto;
+            }
+
+            .header-actions {
+                margin-left: 14px;
+            }
+
+            .main-navigation {
+                width: 100%;
+                height: 54px;
+
+                order: 3;
+
+                margin-top: 10px;
+            }
+
+            .navigation-button {
+                flex: 1;
+            }
+
+            .app-main {
+                width: min(calc(100% - 32px), var(--content-width));
+
+                padding: 34px 0 72px;
+            }
+
+            .panel-header {
+                padding: 22px 20px 18px;
+            }
+
+            .panel-body {
+                padding: 22px 20px;
+            }
+
+            .field,
+            .field.third,
+            .field.full {
+                grid-column: 1 / -1;
+            }
+
+            .form-actions {
+                align-items: stretch;
+                flex-direction: column;
+
+                padding: 20px;
+            }
+
+            .primary-button {
+                width: 100%;
+            }
+
+            .success-summary__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toast {
+                right: 16px;
+                bottom: 16px;
+            }
+
+            .input-with-suffix {
+                position: relative;
+            }
+
+            .input-with-suffix input {
+                padding-right: 70px;
+            }
+
+            .input-suffix {
+                position: absolute;
+                top: 50%;
+                right: 15px;
+
+                transform: translateY(-50%);
+
+                color: var(--text-secondary);
+
+                font-size: 0.88rem;
+                font-weight: 700;
+
+                pointer-events: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <main>
+    <!-- =========================================
+         HEADER
+         ========================================= -->
 
-        <header>
-            <h1>Maikeise Quotations</h1>
-            <p>Cadastro de cotação</p>
-        </header>
+    <header class="app-header">
+        <div class="app-header__content">
 
-        <form id="quotation-form">
+            <div class="brand">
+                MAIKEISE
+            </div>
 
-            <section>
-                <h2>Identificação</h2>
-
-                <div>
-                    <label for="rfp">RFP *</label>
-                    <input id="rfp" name="rfp" type="text" required>
-                </div>
-
-                <div>
-                    <label for="itemCode">Código do item *</label>
-                    <input id="itemCode" name="itemCode" type="text" required>
-                </div>
-
-                <div>
-                    <label for="reference">Referência *</label>
-                    <input id="reference" name="reference" type="text" required>
-                </div>
-
-                <div>
-                    <label for="description">Descrição *</label>
-                    <textarea id="description" name="description" required></textarea>
-                </div>
-
-                <div>
-                    <label for="supplier">Fornecedor *</label>
-                    <input id="supplier" name="supplier" type="text" required>
-                </div>
-            </section>
-
-
-            <section>
-                <h2>Valores</h2>
-
-                <div>
-                    <label for="quantity">Quantidade *</label>
-                    <input id="quantity" name="quantity" type="number" min="0.01" step="any" required>
-                </div>
-
-                <div>
-                    <label for="unitValue">
-                        Valor unitário *
-                    </label>
-
-                    <input id="unitValue" name="unitValue" type="number" min="0" step="0.01" required>
-                </div>
-
-                <div>
-                    <label for="totalValue">
-                        Valor total
-                    </label>
-
-                    <input id="totalValue" type="text" readonly>
-                </div>
-            </section>
-
-
-            <section>
-                <h2>Informações comerciais</h2>
-
-                <div>
-                    <label for="ncm">NCM *</label>
-                    <input id="ncm" name="ncm" type="text" inputmode="numeric" maxlength="10" required>
-                </div>
-
-                <div>
-                    <label for="deadline">Prazo *</label>
-                    <input id="deadline" name="deadline" type="text" required>
-                </div>
-
-                <div>
-                    <label for="payment">Pagamento *</label>
-                    <input id="payment" name="payment" type="text" required>
-                </div>
-
-                <div>
-                    <label for="delivery">Entrega *</label>
-                    <input id="delivery" name="delivery" type="text" required>
-                </div>
-
-                <div>
-                    <label for="requestedAt">
-                        Data solicitada *
-                    </label>
-
-                    <input id="requestedAt" name="requestedAt" type="date" required>
-                </div>
-            </section>
-
-
-            <section>
-                <div>
-                    <h2>Dados opcionais</h2>
-
-                    <p>
-                        Adicione outras informações relevantes
-                        desta cotação.
-                    </p>
-                </div>
-
-                <div id="optional-data-container"></div>
-
-                <button type="button" id="add-optional-data">
-                    Adicionar campo
+            <nav class="main-navigation" aria-label="Navegação principal" data-i18n-aria-label="mainNavigation">
+                <button type="button" class="navigation-button is-active" data-view-target="search-view"
+                    data-i18n="navSearch">
+                    Consulta
                 </button>
-            </section>
 
-
-            <section>
-                <div id="form-message"></div>
-
-                <button type="submit" id="submit-button">
-                    Salvar cotação
+                <button type="button" class="navigation-button" data-view-target="registration-view" data-i18n="navNew">
+                    Nova cotação
                 </button>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-selector" aria-label="Selecionar idioma" data-i18n-aria-label="languageSelector">
+                    <button type="button" class="language-button is-active" data-language="pt">
+                        PT
+                    </button>
+
+                    <button type="button" class="language-button" data-language="en">
+                        EN
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================
+         MAIN
+         ========================================= -->
+
+    <main class="app-main">
+
+        <!-- CONSULTA -->
+        <section id="search-view" class="view is-active">
+            <header class="page-header">
+                <span class="eyebrow">
+                    Maikeise Quotations
+                </span>
+
+                <h1 data-i18n="searchTitle">
+                    Consulta de cotações
+                </h1>
+
+                <p data-i18n="searchDescription">
+                    Consulte e gerencie as cotações cadastradas no sistema.
+                </p>
+            </header>
+
+            <div class="placeholder-panel" data-i18n="searchPlaceholder">
+                A consulta de cotações será implementada nesta área.
+            </div>
+        </section>
+
+
+        <!-- NOVA COTAÇÃO -->
+        <section id="registration-view" class="view">
+            <header class="page-header">
+                <span class="eyebrow">
+                    Maikeise Quotations
+                </span>
+
+                <h1 data-i18n="newQuotationTitle">
+                    Nova cotação
+                </h1>
+
+                <p data-i18n="newQuotationDescription">
+                    Registre os dados comerciais da cotação. Os campos marcados com * são obrigatórios.
+                </p>
+            </header>
+
+
+            <!-- RESUMO DA ÚLTIMA COTAÇÃO SALVA -->
+            <section id="success-summary" class="success-summary" hidden aria-live="polite">
+                <div class="success-summary__header">
+                    <div>
+                        <h2 data-i18n="successSummaryTitle">
+                            Cotação cadastrada
+                        </h2>
+
+                        <p data-i18n="successSummaryDescription">
+                            O registro foi salvo com sucesso.
+                        </p>
+                    </div>
+
+                    <button type="button" id="close-success-summary" class="summary-close" aria-label="Fechar resumo"
+                        data-i18n-aria-label="closeSummary">
+                        ×
+                    </button>
+                </div>
+
+                <div class="success-summary__grid">
+                    <div class="summary-item">
+                        <span>RFP</span>
+                        <strong id="summary-rfp" class="mono"></strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span data-i18n="itemCodeLabel">
+                            Código do item
+                        </span>
+
+                        <strong id="summary-item-code" class="mono"></strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span data-i18n="supplierLabel">
+                            Fornecedor
+                        </span>
+
+                        <strong id="summary-supplier"></strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span data-i18n="totalValueLabel">
+                            Valor total
+                        </span>
+
+                        <strong id="summary-total"></strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span>ID</span>
+
+                        <strong id="summary-id" class="mono"></strong>
+                    </div>
+
+                    <div class="summary-item">
+                        <span data-i18n="statusLabel">
+                            Status
+                        </span>
+
+                        <strong id="summary-status"></strong>
+                    </div>
+                </div>
             </section>
 
-        </form>
+
+            <!-- FORMULÁRIO -->
+            <form id="quotation-form" class="quotation-form" novalidate>
+
+                <!-- 01 IDENTIFICAÇÃO -->
+                <section class="form-panel">
+
+                    <header class="panel-header">
+                        <div class="panel-number">
+                            01
+                        </div>
+
+                        <div class="panel-heading">
+                            <h2 data-i18n="identificationTitle">
+                                Identificação
+                            </h2>
+
+                            <p data-i18n="identificationDescription">
+                                Informações principais para localizar e reconhecer a cotação.
+                            </p>
+                        </div>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="form-grid">
+
+                            <div class="field" data-field="rfp">
+                                <label for="rfp">
+                                    RFP
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="rfp" name="rfp" class="mono" type="text" autocomplete="off" required>
+
+                                <div id="rfp-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field" data-field="itemCode">
+                                <label for="itemCode">
+                                    <span data-i18n="itemCodeLabel">
+                                        Código do item
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="itemCode" name="itemCode" class="mono" type="text" autocomplete="off"
+                                    required>
+
+                                <div id="itemCode-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field" data-field="reference">
+                                <label for="reference">
+                                    <span data-i18n="referenceLabel">
+                                        Referência
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="reference" name="reference" class="mono" type="text" autocomplete="off"
+                                    required>
+
+                                <div id="reference-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field" data-field="supplier">
+                                <label for="supplier">
+                                    <span data-i18n="supplierLabel">
+                                        Fornecedor
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="supplier" name="supplier" type="text" autocomplete="organization" required>
+
+                                <div id="supplier-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field full" data-field="description">
+                                <label for="description">
+                                    <span data-i18n="descriptionLabel">
+                                        Descrição
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <textarea id="description" name="description" required></textarea>
+
+                                <div id="description-error" class="field-error"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- 02 VALORES -->
+                <section class="form-panel">
+
+                    <header class="panel-header">
+                        <div class="panel-number">
+                            02
+                        </div>
+
+                        <div class="panel-heading">
+                            <h2 data-i18n="valuesTitle">
+                                Valores
+                            </h2>
+
+                            <p data-i18n="valuesDescription">
+                                Quantidade e valores utilizados no cálculo da cotação.
+                            </p>
+                        </div>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="form-grid">
+
+                            <div class="field third" data-field="quantity">
+                                <label for="quantity">
+                                    <span data-i18n="quantityLabel">
+                                        Quantidade
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="quantity" name="quantity" type="number" min="0.01" step="any" required>
+
+                                <div id="quantity-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field third" data-field="unitValue">
+                                <label for="unitValue">
+                                    <span data-i18n="unitValueLabel">
+                                        Valor unitário
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="unitValue" name="unitValue" type="number" min="0" step="0.01" required>
+
+                                <div id="unitValue-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field third">
+                                <div class="total-card" aria-live="polite">
+                                    <span class="total-card__label" data-i18n="totalValueLabel">
+                                        Valor total
+                                    </span>
+
+                                    <strong id="totalValueDisplay" class="total-card__value">
+                                        R$ 0,00
+                                    </strong>
+
+                                    <input id="totalValue" type="hidden" readonly>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- 03 INFORMAÇÕES COMERCIAIS -->
+                <section class="form-panel">
+
+                    <header class="panel-header">
+                        <div class="panel-number">
+                            03
+                        </div>
+
+                        <div class="panel-heading">
+                            <h2 data-i18n="commercialTitle">
+                                Informações comerciais
+                            </h2>
+
+                            <p data-i18n="commercialDescription">
+                                Condições comerciais, classificação e informações de entrega.
+                            </p>
+                        </div>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="form-grid">
+
+                            <div class="field third" data-field="ncm">
+                                <label for="ncm">
+                                    NCM
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="ncm" name="ncm" class="mono" type="text" inputmode="numeric" maxlength="10"
+                                    autocomplete="off" required>
+
+                                <div class="field-hint" data-i18n="ncmHint">
+                                    Informe os 8 dígitos do NCM.
+                                </div>
+
+                                <div id="ncm-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field third" data-field="deadline">
+                                <label for="deadline">
+                                    Prazo de entrega
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <div class="input-with-suffix">
+                                    <input id="deadline" name="deadline" type="number" min="0" step="1"
+                                        inputmode="numeric" placeholder="0" required>
+
+                                    <span class="input-suffix">
+                                        dias
+                                    </span>
+                                </div>
+
+                                <div id="deadline-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field third" data-field="requestedAt">
+                                <label for="requestedAt">
+                                    <span data-i18n="requestedAtLabel">
+                                        Data solicitada
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="requestedAt" name="requestedAt" type="date" required>
+
+                                <div id="requestedAt-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field" data-field="payment">
+                                <label for="payment">
+                                    Prazo de pagamento
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <div class="input-with-suffix">
+                                    <input id="payment" name="payment" type="number" min="0" step="1"
+                                        inputmode="numeric" placeholder="0" required>
+
+                                    <span class="input-suffix">
+                                        dias
+                                    </span>
+                                </div>
+
+                                <div id="payment-error" class="field-error"></div>
+                            </div>
+
+
+                            <div class="field" data-field="delivery">
+                                <label for="delivery">
+                                    <span data-i18n="deliveryLabel">
+                                        Entrega
+                                    </span>
+
+                                    <span class="required-mark">*</span>
+                                </label>
+
+                                <input id="delivery" name="delivery" type="text" placeholder="Ex.: São Paulo - SP"
+                                    data-i18n-placeholder="deliveryPlaceholder" required>
+
+                                <div id="delivery-error" class="field-error"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- 04 INFORMAÇÕES ADICIONAIS -->
+                <section class="form-panel">
+
+                    <header class="panel-header">
+                        <div class="panel-number">
+                            04
+                        </div>
+
+                        <div class="panel-heading">
+                            <h2 data-i18n="additionalTitle">
+                                Informações adicionais
+                            </h2>
+
+                            <p data-i18n="additionalDescription">
+                                Campos opcionais organizados por categoria. Preencha apenas o que for necessário.
+                            </p>
+                        </div>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="additional-groups">
+
+                            <!-- RESPONSABILIDADE / LOCALIZAÇÃO -->
+                            <section class="additional-group">
+
+                                <h3 class="additional-group__title" data-i18n="additionalLocationTitle">
+                                    Responsabilidade e localização
+                                </h3>
+
+                                <p class="additional-group__description" data-i18n="additionalLocationDescription">
+                                    Identificação interna de responsável, região e centro.
+                                </p>
+
+                                <div class="form-grid">
+
+                                    <div class="field third">
+                                        <label for="additionalOwner" data-i18n="ownerLabel">
+                                            Responsável
+                                        </label>
+
+                                        <input id="additionalOwner" type="text" autocomplete="off">
+                                    </div>
+
+
+                                    <div class="field third">
+                                        <label for="additionalRegion" data-i18n="regionLabel">
+                                            Região
+                                        </label>
+
+                                        <input id="additionalRegion" type="text" autocomplete="off">
+                                    </div>
+
+
+                                    <div class="field third">
+                                        <label for="additionalCenter" data-i18n="centerLabel">
+                                            Centro
+                                        </label>
+
+                                        <input id="additionalCenter" type="text" autocomplete="off">
+                                    </div>
+
+                                </div>
+
+                            </section>
+
+
+                            <!-- FINANCEIRO -->
+                            <section class="additional-group">
+
+                                <h3 class="additional-group__title" data-i18n="additionalFinancialTitle">
+                                    Financeiro
+                                </h3>
+
+                                <p class="additional-group__description" data-i18n="additionalFinancialDescription">
+                                    Informações financeiras complementares da proposta.
+                                </p>
+
+                                <div class="form-grid">
+
+                                    <div class="field">
+                                        <label for="additionalCurrency" data-i18n="currencyLabel">
+                                            Moeda
+                                        </label>
+
+                                        <select id="additionalCurrency">
+                                            <option value="" data-i18n="selectOption">
+                                                Selecione
+                                            </option>
+
+                                            <option value="BRL">
+                                                BRL — Real brasileiro
+                                            </option>
+
+                                            <option value="USD">
+                                                USD — Dólar americano
+                                            </option>
+
+                                            <option value="EUR">
+                                                EUR — Euro
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="field">
+                                        <label for="additionalTaxes" data-i18n="taxesLabel">
+                                            Impostos
+                                        </label>
+
+                                        <input id="additionalTaxes" type="text" autocomplete="off">
+                                    </div>
+
+                                </div>
+
+                            </section>
+
+
+                            <!-- OBSERVAÇÕES -->
+                            <section class="additional-group">
+
+                                <h3 class="additional-group__title" data-i18n="additionalNotesTitle">
+                                    Observações
+                                </h3>
+
+                                <p class="additional-group__description" data-i18n="additionalNotesDescription">
+                                    Use este espaço para informações que não se encaixam nos demais campos.
+                                </p>
+
+                                <div class="form-grid">
+
+                                    <div class="field full">
+                                        <label for="additionalNotes" data-i18n="notesLabel">
+                                            Observações
+                                        </label>
+
+                                        <textarea id="additionalNotes" rows="4"></textarea>
+                                    </div>
+
+                                </div>
+
+                            </section>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- AÇÕES -->
+                <section class="form-actions">
+
+                    <div id="form-message" role="status" aria-live="polite"></div>
+
+                    <button type="submit" id="submit-button" class="primary-button" data-i18n="saveButton">
+                        Salvar cotação
+                    </button>
+
+                </section>
+
+            </form>
+
+        </section>
 
     </main>
 
+
+    <!-- TOAST -->
+    <div id="success-toast" class="toast" role="status" aria-live="polite">
+        Cotação cadastrada com sucesso.
+    </div>
+
+
     <script>
-        const form =
-            document.getElementById('quotation-form');
+        /* =========================================
+           TRANSLATIONS
+           ========================================= */
 
-        const quantityInput =
-            document.getElementById('quantity');
+        const translations = {
+            pt: {
+                mainNavigation: 'Navegação principal',
+                languageSelector: 'Selecionar idioma',
+                navSearch: 'Consulta',
+                navNew: 'Nova cotação',
 
-        const unitValueInput =
-            document.getElementById('unitValue');
+                searchTitle: 'Consulta de cotações',
+                searchDescription:
+                    'Consulte e gerencie as cotações cadastradas no sistema.',
+                searchPlaceholder:
+                    'A consulta de cotações será implementada nesta área.',
 
-        const totalValueInput =
-            document.getElementById('totalValue');
+                newQuotationTitle: 'Nova cotação',
+                newQuotationDescription:
+                    'Registre os dados comerciais da cotação. Os campos marcados com * são obrigatórios.',
 
-        const optionalDataContainer =
-            document.getElementById(
-                'optional-data-container'
+                identificationTitle: 'Identificação',
+                identificationDescription:
+                    'Informações principais para localizar e reconhecer a cotação.',
+
+                valuesTitle: 'Valores',
+                valuesDescription:
+                    'Quantidade e valores utilizados no cálculo da cotação.',
+
+                commercialTitle: 'Informações comerciais',
+                commercialDescription:
+                    'Condições comerciais, classificação e informações de entrega.',
+
+                additionalTitle: 'Informações adicionais',
+                additionalDescription:
+                    'Campos opcionais organizados por categoria. Preencha apenas o que for necessário.',
+
+                additionalLocationTitle:
+                    'Responsabilidade e localização',
+                additionalLocationDescription:
+                    'Identificação interna de responsável, região e centro.',
+
+                additionalFinancialTitle: 'Financeiro',
+                additionalFinancialDescription:
+                    'Informações financeiras complementares da proposta.',
+
+                additionalNotesTitle: 'Observações',
+                additionalNotesDescription:
+                    'Use este espaço para informações que não se encaixam nos demais campos.',
+
+                itemCodeLabel: 'Código do item',
+                referenceLabel: 'Referência',
+                supplierLabel: 'Fornecedor',
+                descriptionLabel: 'Descrição',
+                quantityLabel: 'Quantidade',
+                unitValueLabel: 'Valor unitário',
+                totalValueLabel: 'Valor total',
+                deadlineLabel: 'Prazo de entrega em dias',
+                paymentLabel: 'Prazo de pagamento em dias',
+                deliveryLabel: 'Entrega',
+                requestedAtLabel: 'Data solicitada',
+
+                ownerLabel: 'Responsável',
+                regionLabel: 'Região',
+                centerLabel: 'Centro',
+                currencyLabel: 'Moeda',
+                taxesLabel: 'Impostos',
+                notesLabel: 'Observações',
+
+                selectOption: 'Selecione',
+
+                deadlinePlaceholder: 'Ex.: 10 dias',
+                paymentPlaceholder: 'Ex.: 30 dias',
+                deliveryPlaceholder: 'Ex.: São Paulo - SP',
+
+                ncmHint: 'Informe os 8 dígitos do NCM.',
+
+                saveButton: 'Salvar cotação',
+                savingButton: 'Salvando...',
+
+                validationGeneral:
+                    'Existem informações que precisam ser corrigidas. Verifique os campos destacados.',
+
+                validationRfp: 'Informe o RFP.',
+                validationItemCode: 'Informe o código do item.',
+                validationReference: 'Informe a referência.',
+                validationDescription: 'Informe a descrição.',
+                validationSupplier: 'Informe o fornecedor.',
+                validationQuantity:
+                    'Informe uma quantidade maior que zero.',
+                validationUnitValue:
+                    'Informe um valor unitário igual ou maior que zero.',
+                validationNcm:
+                    'O NCM deve conter exatamente 8 dígitos.',
+                validationDeadline: 'Informe o prazo de entrega em dias.',
+                validationPayment:
+                    'Informe o prazo de pagamento em dias.',
+                validationDelivery: 'Informe a entrega.',
+                validationRequestedAt:
+                    'Informe uma data solicitada válida.',
+
+                savingMessage: 'Salvando cotação...',
+                genericError:
+                    'Não foi possível salvar a cotação. Verifique os dados e tente novamente.',
+                backendValidationError:
+                    'Não foi possível salvar. Corrija os campos destacados e tente novamente.',
+                communicationError:
+                    'Não foi possível comunicar com o servidor. Tente novamente.',
+
+                successMessage:
+                    'Cotação cadastrada com sucesso.',
+                successWithWarning:
+                    'Cotação salva com aviso de possível duplicidade.',
+
+                successSummaryTitle: 'Cotação cadastrada',
+                successSummaryDescription:
+                    'O registro foi salvo com sucesso.',
+                closeSummary: 'Fechar resumo',
+                statusLabel: 'Status'
+            },
+
+            en: {
+                mainNavigation: 'Main navigation',
+                languageSelector: 'Select language',
+                navSearch: 'Search',
+                navNew: 'New quotation',
+
+                searchTitle: 'Quotation search',
+                searchDescription:
+                    'Search and manage quotations registered in the system.',
+                searchPlaceholder:
+                    'Quotation search will be implemented in this area.',
+
+                newQuotationTitle: 'New quotation',
+                newQuotationDescription:
+                    'Register the quotation commercial data. Fields marked with * are required.',
+
+                identificationTitle: 'Identification',
+                identificationDescription:
+                    'Main information used to locate and identify the quotation.',
+
+                valuesTitle: 'Values',
+                valuesDescription:
+                    'Quantity and values used to calculate the quotation.',
+
+                commercialTitle: 'Commercial information',
+                commercialDescription:
+                    'Commercial conditions, classification, and delivery information.',
+
+                additionalTitle: 'Additional information',
+                additionalDescription:
+                    'Optional fields organized by category. Fill in only what is necessary.',
+
+                additionalLocationTitle:
+                    'Responsibility and location',
+                additionalLocationDescription:
+                    'Internal identification of owner, region, and center.',
+
+                additionalFinancialTitle: 'Financial',
+                additionalFinancialDescription:
+                    'Additional financial information for the quotation.',
+
+                additionalNotesTitle: 'Notes',
+                additionalNotesDescription:
+                    'Use this area for information that does not fit the other fields.',
+
+                itemCodeLabel: 'Item code',
+                referenceLabel: 'Reference',
+                supplierLabel: 'Supplier',
+                descriptionLabel: 'Description',
+                quantityLabel: 'Quantity',
+                unitValueLabel: 'Unit value',
+                totalValueLabel: 'Total value',
+                deadlineLabel: 'Delivery lead time',
+                paymentLabel: 'Payment term',
+                deliveryLabel: 'Delivery',
+                requestedAtLabel: 'Requested date',
+
+                ownerLabel: 'Owner',
+                regionLabel: 'Region',
+                centerLabel: 'Center',
+                currencyLabel: 'Currency',
+                taxesLabel: 'Taxes',
+                notesLabel: 'Notes',
+
+                selectOption: 'Select',
+
+                deadlinePlaceholder: 'E.g.: 10 days',
+                paymentPlaceholder: 'E.g.: 30 days',
+                deliveryPlaceholder: 'E.g.: São Paulo - SP',
+
+                ncmHint: 'Enter the 8 digits of the NCM code.',
+
+                saveButton: 'Save quotation',
+                savingButton: 'Saving...',
+
+                validationGeneral:
+                    'Some information needs to be corrected. Check the highlighted fields.',
+
+                validationRfp: 'Enter the RFP.',
+                validationItemCode: 'Enter the item code.',
+                validationReference: 'Enter the reference.',
+                validationDescription: 'Enter the description.',
+                validationSupplier: 'Enter the supplier.',
+                validationQuantity:
+                    'Enter a quantity greater than zero.',
+                validationUnitValue:
+                    'Enter a unit value greater than or equal to zero.',
+                validationNcm:
+                    'The NCM must contain exactly 8 digits.',
+                validationDeadline: 'Enter the delivery lead time in days.',
+                validationPayment:
+                    'Enter the payment term in days.',
+                validationDelivery: 'Enter the delivery information.',
+                validationRequestedAt:
+                    'Enter a valid requested date.',
+
+                savingMessage: 'Saving quotation...',
+                genericError:
+                    'The quotation could not be saved. Check the data and try again.',
+                backendValidationError:
+                    'The quotation could not be saved. Correct the highlighted fields and try again.',
+                communicationError:
+                    'The server could not be reached. Try again.',
+
+                successMessage:
+                    'Quotation registered successfully.',
+                successWithWarning:
+                    'Quotation saved with a possible duplicate warning.',
+
+                successSummaryTitle: 'Quotation registered',
+                successSummaryDescription:
+                    'The record was saved successfully.',
+                closeSummary: 'Close summary',
+                statusLabel: 'Status'
+            }
+        };
+
+
+        let currentLanguage = getInitialLanguage();
+
+
+        function getInitialLanguage() {
+            try {
+                return localStorage.getItem(
+                    'maikeise-quotations-language'
+                ) || 'pt';
+            } catch (error) {
+                return 'pt';
+            }
+        }
+
+
+        function t(key) {
+            return (
+                translations[currentLanguage][key] ||
+                translations.pt[key] ||
+                key
+            );
+        }
+
+
+        function applyTranslations() {
+            document.documentElement.lang =
+                currentLanguage === 'pt'
+                    ? 'pt-BR'
+                    : 'en';
+
+
+            document
+                .querySelectorAll('[data-i18n]')
+                .forEach((element) => {
+                    element.textContent =
+                        t(element.dataset.i18n);
+                });
+
+
+            document
+                .querySelectorAll(
+                    '[data-i18n-placeholder]'
+                )
+                .forEach((element) => {
+                    element.placeholder =
+                        t(
+                            element.dataset
+                                .i18nPlaceholder
+                        );
+                });
+
+
+            document
+                .querySelectorAll(
+                    '[data-i18n-aria-label]'
+                )
+                .forEach((element) => {
+                    element.setAttribute(
+                        'aria-label',
+                        t(
+                            element.dataset
+                                .i18nAriaLabel
+                        )
+                    );
+                });
+
+
+            document
+                .querySelectorAll(
+                    '.language-button'
+                )
+                .forEach((button) => {
+                    button.classList.toggle(
+                        'is-active',
+                        button.dataset.language ===
+                        currentLanguage
+                    );
+                });
+
+
+            refreshVisibleErrors();
+
+            updateTotal();
+        }
+
+
+        document
+            .querySelectorAll('.language-button')
+            .forEach((button) => {
+                button.addEventListener(
+                    'click',
+                    () => {
+                        currentLanguage =
+                            button.dataset.language;
+
+                        try {
+                            localStorage.setItem(
+                                'maikeise-quotations-language',
+                                currentLanguage
+                            );
+                        } catch (error) {
+                            console.warn(
+                                'Language preference could not be persisted.'
+                            );
+                        }
+
+                        applyTranslations();
+                    }
+                );
+            });
+
+
+        /* =========================================
+           NAVIGATION
+           ========================================= */
+
+        const navigationButtons =
+            document.querySelectorAll(
+                '[data-view-target]'
             );
 
-        const addOptionalDataButton =
+        const views =
+            document.querySelectorAll('.view');
+
+
+        navigationButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const targetId =
+                    button.dataset.viewTarget;
+
+
+                navigationButtons.forEach(
+                    (item) => {
+                        item.classList.remove(
+                            'is-active'
+                        );
+                    }
+                );
+
+
+                views.forEach((view) => {
+                    view.classList.remove(
+                        'is-active'
+                    );
+                });
+
+
+                button.classList.add(
+                    'is-active'
+                );
+
+
+                document
+                    .getElementById(targetId)
+                    .classList.add('is-active');
+            });
+        });
+
+
+        /* =========================================
+           FORM REFERENCES
+           ========================================= */
+
+        const form =
             document.getElementById(
-                'add-optional-data'
+                'quotation-form'
+            );
+
+        const quantityInput =
+            document.getElementById(
+                'quantity'
+            );
+
+        const unitValueInput =
+            document.getElementById(
+                'unitValue'
+            );
+
+        const totalValueInput =
+            document.getElementById(
+                'totalValue'
+            );
+
+        const totalValueDisplay =
+            document.getElementById(
+                'totalValueDisplay'
             );
 
         const submitButton =
-            document.getElementById('submit-button');
+            document.getElementById(
+                'submit-button'
+            );
 
         const formMessage =
-            document.getElementById('form-message');
+            document.getElementById(
+                'form-message'
+            );
 
+        const successToast =
+            document.getElementById(
+                'success-toast'
+            );
+
+        const successSummary =
+            document.getElementById(
+                'success-summary'
+            );
+
+
+        /* =========================================
+           ADDITIONAL INFORMATION
+
+           Important:
+           These fields are now always visible.
+           Their values are read directly on submit.
+           There is no modal and no temporary array
+           that the user has to confirm first.
+           ========================================= */
+
+        const additionalFields = {
+            OWNER:
+                document.getElementById(
+                    'additionalOwner'
+                ),
+
+            REGION:
+                document.getElementById(
+                    'additionalRegion'
+                ),
+
+            CENTER:
+                document.getElementById(
+                    'additionalCenter'
+                ),
+
+            CURRENCY:
+                document.getElementById(
+                    'additionalCurrency'
+                ),
+
+            TAXES:
+                document.getElementById(
+                    'additionalTaxes'
+                ),
+
+            NOTES:
+                document.getElementById(
+                    'additionalNotes'
+                )
+        };
+
+
+        function getOptionalData() {
+            return Object.entries(
+                additionalFields
+            )
+                .map(
+                    ([key, element], index) => ({
+                        key,
+                        value:
+                            element.value.trim(),
+                        order: index
+                    })
+                )
+                .filter(
+                    (entry) =>
+                        entry.value !== ''
+                );
+        }
+
+
+        /* =========================================
+           TOTAL VALUE
+           ========================================= */
 
         quantityInput.addEventListener(
             'input',
@@ -184,98 +2099,555 @@
 
         function updateTotal() {
             const quantity =
-                Number(quantityInput.value) || 0;
+                Number(
+                    quantityInput.value
+                ) || 0;
 
             const unitValue =
-                Number(unitValueInput.value) || 0;
+                Number(
+                    unitValueInput.value
+                ) || 0;
 
             const total =
                 quantity * unitValue;
 
+
             totalValueInput.value =
+                String(total);
+
+
+            const locale =
+                currentLanguage === 'pt'
+                    ? 'pt-BR'
+                    : 'en-US';
+
+
+            totalValueDisplay.textContent =
                 total.toLocaleString(
-                    'pt-BR',
+                    locale,
                     {
                         style: 'currency',
-                        currency: 'BRL',
+                        currency: 'BRL'
                     }
                 );
         }
 
 
-        addOptionalDataButton.addEventListener(
-            'click',
-            addOptionalField
+        /* =========================================
+           CLIENT VALIDATION
+           ========================================= */
+
+        const validationKeyByField = {
+            rfp: 'validationRfp',
+            itemCode: 'validationItemCode',
+            reference: 'validationReference',
+            description:
+                'validationDescription',
+            supplier: 'validationSupplier',
+            quantity: 'validationQuantity',
+            unitValue: 'validationUnitValue',
+            ncm: 'validationNcm',
+            deadline: 'validationDeadline',
+            payment: 'validationPayment',
+            delivery: 'validationDelivery',
+            requestedAt:
+                'validationRequestedAt'
+        };
+
+
+        const requiredFieldNames = [
+            'rfp',
+            'itemCode',
+            'reference',
+            'description',
+            'supplier',
+            'quantity',
+            'unitValue',
+            'ncm',
+            'deadline',
+            'payment',
+            'delivery',
+            'requestedAt'
+        ];
+
+
+        const visibleFieldErrors = new Set();
+
+
+        requiredFieldNames.forEach(
+            (name) => {
+                const input =
+                    form.elements[name];
+
+                if (!input) {
+                    return;
+                }
+
+
+                input.addEventListener(
+                    'input',
+                    () => {
+                        clearFieldError(name);
+                    }
+                );
+
+
+                input.addEventListener(
+                    'change',
+                    () => {
+                        clearFieldError(name);
+                    }
+                );
+            }
         );
 
 
-        function addOptionalField() {
-            const row =
-                document.createElement('div');
+        function validateForm() {
+            clearAllFieldErrors();
 
-            row.className = 'optional-data-row';
 
-            row.innerHTML = `
-      <input
-        type="text"
-        class="optional-key"
-        placeholder="Campo"
-        aria-label="Nome do campo opcional"
-      >
+            const errors = {};
 
-      <input
-        type="text"
-        class="optional-value"
-        placeholder="Valor"
-        aria-label="Valor do campo opcional"
-      >
 
-      <button
-        type="button"
-        class="remove-optional-data"
-      >
-        Remover
-      </button>
-    `;
+            const textRequired = [
+                'rfp',
+                'itemCode',
+                'reference',
+                'description',
+                'supplier',
+                'deadline',
+                'payment',
+                'delivery'
+            ];
 
-            row
-                .querySelector('.remove-optional-data')
-                .addEventListener(
-                    'click',
-                    () => row.remove()
+
+            textRequired.forEach(
+                (name) => {
+                    if (
+                        !String(
+                            form.elements[name]
+                                .value || ''
+                        ).trim()
+                    ) {
+                        errors[name] =
+                            validationKeyByField[
+                            name
+                            ];
+                    }
+                }
+            );
+
+
+            const quantity =
+                Number(
+                    form.quantity.value
                 );
 
-            optionalDataContainer.appendChild(row);
+
+            if (
+                !form.quantity.value ||
+                !Number.isFinite(quantity) ||
+                quantity <= 0
+            ) {
+                errors.quantity =
+                    validationKeyByField
+                        .quantity;
+            }
+
+
+            const unitValue =
+                Number(
+                    form.unitValue.value
+                );
+
+
+            if (
+                form.unitValue.value === '' ||
+                !Number.isFinite(
+                    unitValue
+                ) ||
+                unitValue < 0
+            ) {
+                errors.unitValue =
+                    validationKeyByField
+                        .unitValue;
+            }
+
+
+            const ncmDigits =
+                form.ncm.value.replace(
+                    /\D/g,
+                    ''
+                );
+
+
+            if (ncmDigits.length !== 8) {
+                errors.ncm =
+                    validationKeyByField.ncm;
+            }
+
+
+            if (
+                !form.requestedAt.value
+            ) {
+                errors.requestedAt =
+                    validationKeyByField
+                        .requestedAt;
+            }
+
+
+            Object.entries(errors)
+                .forEach(
+                    ([name, key]) => {
+                        showFieldError(
+                            name,
+                            key
+                        );
+                    }
+                );
+
+
+            const firstErrorName =
+                Object.keys(errors)[0];
+
+
+            if (firstErrorName) {
+                showMessage(
+                    t('validationGeneral'),
+                    'error'
+                );
+
+
+                const firstInput =
+                    form.elements[
+                    firstErrorName
+                    ];
+
+
+                firstInput.focus();
+
+
+                firstInput.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+
+
+                return false;
+            }
+
+
+            return true;
         }
 
 
-        function getOptionalData() {
-            const rows =
-                optionalDataContainer.querySelectorAll(
-                    '.optional-data-row'
+        function showFieldError(
+            name,
+            translationKey
+        ) {
+            const wrapper =
+                document.querySelector(
+                    `[data-field="${name}"]`
                 );
 
-            return Array
-                .from(rows)
-                .map((row, index) => {
-                    const key =
-                        row.querySelector('.optional-key')
-                            .value
-                            .trim();
+            const error =
+                document.getElementById(
+                    `${name}-error`
+                );
 
-                    const value =
-                        row.querySelector('.optional-value')
-                            .value
-                            .trim();
+            const input =
+                form.elements[name];
 
-                    return {
-                        key,
-                        value,
-                        order: index,
-                    };
-                })
-                .filter(entry => entry.key !== '');
+
+            if (wrapper) {
+                wrapper.classList.add(
+                    'is-invalid'
+                );
+            }
+
+
+            if (error) {
+                error.textContent =
+                    t(translationKey);
+
+                error.setAttribute(
+                    'role',
+                    'alert'
+                );
+            }
+
+
+            if (input) {
+                input.setAttribute(
+                    'aria-invalid',
+                    'true'
+                );
+
+                input.setAttribute(
+                    'aria-describedby',
+                    `${name}-error`
+                );
+            }
+
+
+            visibleFieldErrors.add(
+                name
+            );
         }
+
+
+        function clearFieldError(name) {
+            const wrapper =
+                document.querySelector(
+                    `[data-field="${name}"]`
+                );
+
+            const error =
+                document.getElementById(
+                    `${name}-error`
+                );
+
+            const input =
+                form.elements[name];
+
+
+            if (wrapper) {
+                wrapper.classList.remove(
+                    'is-invalid'
+                );
+            }
+
+
+            if (error) {
+                error.textContent = '';
+            }
+
+
+            if (input) {
+                input.removeAttribute(
+                    'aria-invalid'
+                );
+
+                input.removeAttribute(
+                    'aria-describedby'
+                );
+            }
+
+
+            visibleFieldErrors.delete(
+                name
+            );
+        }
+
+
+        function clearAllFieldErrors() {
+            requiredFieldNames.forEach(
+                clearFieldError
+            );
+        }
+
+
+        function refreshVisibleErrors() {
+            Array.from(
+                visibleFieldErrors
+            ).forEach((name) => {
+                const error =
+                    document.getElementById(
+                        `${name}-error`
+                    );
+
+
+                if (error) {
+                    error.textContent =
+                        t(
+                            validationKeyByField[
+                            name
+                            ]
+                        );
+                }
+            });
+        }
+
+
+        /* =========================================
+           BACKEND VALIDATION MAPPING
+           ========================================= */
+
+        function handleBackendValidation(
+            message
+        ) {
+            const text =
+                String(message || '');
+
+            const normalized =
+                text.toLowerCase();
+
+
+            const mappings = [
+                {
+                    patterns: ['rfp'],
+                    field: 'rfp'
+                },
+                {
+                    patterns: [
+                        'item code',
+                        'itemcode',
+                        'código do item'
+                    ],
+                    field: 'itemCode'
+                },
+                {
+                    patterns: [
+                        'reference',
+                        'referência'
+                    ],
+                    field: 'reference'
+                },
+                {
+                    patterns: [
+                        'description',
+                        'descrição'
+                    ],
+                    field: 'description'
+                },
+                {
+                    patterns: [
+                        'supplier',
+                        'fornecedor'
+                    ],
+                    field: 'supplier'
+                },
+                {
+                    patterns: [
+                        'quantity',
+                        'quantidade'
+                    ],
+                    field: 'quantity'
+                },
+                {
+                    patterns: [
+                        'unit value',
+                        'unitvalue',
+                        'valor unitário'
+                    ],
+                    field: 'unitValue'
+                },
+                {
+                    patterns: ['ncm'],
+                    field: 'ncm'
+                },
+                {
+                    patterns: [
+                        'deadline',
+                        'prazo'
+                    ],
+                    field: 'deadline'
+                },
+                {
+                    patterns: [
+                        'payment',
+                        'pagamento'
+                    ],
+                    field: 'payment'
+                },
+                {
+                    patterns: [
+                        'delivery',
+                        'entrega'
+                    ],
+                    field: 'delivery'
+                },
+                {
+                    patterns: [
+                        'requested date',
+                        'requestedat',
+                        'requested at',
+                        'data solicitada'
+                    ],
+                    field: 'requestedAt'
+                }
+            ];
+
+
+            const matchedFields = [];
+
+
+            mappings.forEach(
+                ({ patterns, field }) => {
+                    if (
+                        patterns.some(
+                            (pattern) =>
+                                normalized.includes(
+                                    pattern
+                                )
+                        )
+                    ) {
+                        if (
+                            !matchedFields.includes(
+                                field
+                            )
+                        ) {
+                            matchedFields.push(
+                                field
+                            );
+                        }
+                    }
+                }
+            );
+
+
+            if (
+                matchedFields.length === 0
+            ) {
+                return false;
+            }
+
+
+            matchedFields.forEach(
+                (field) => {
+                    showFieldError(
+                        field,
+                        validationKeyByField[
+                        field
+                        ]
+                    );
+                }
+            );
+
+
+            showMessage(
+                t(
+                    'backendValidationError'
+                ),
+                'error'
+            );
+
+
+            const firstInput =
+                form.elements[
+                matchedFields[0]
+                ];
+
+
+            if (firstInput) {
+                firstInput.focus();
+
+                firstInput.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+
+
+            return true;
+        }
+
+
+        /* =========================================
+           SUBMIT
+           ========================================= */
+
+        let pendingSubmission = null;
 
 
         form.addEventListener(
@@ -287,39 +2659,75 @@
         function handleSubmit(event) {
             event.preventDefault();
 
-            if (!form.reportValidity()) {
+
+            if (!validateForm()) {
                 return;
             }
 
+
             setLoading(true);
 
+
             showMessage(
-                'Salvando cotação...',
+                t('savingMessage'),
                 'loading'
             );
 
+
             const data = {
-                rfp: form.rfp.value.trim(),
-                itemCode: form.itemCode.value.trim(),
-                reference: form.reference.value.trim(),
+                rfp:
+                    form.rfp.value.trim(),
+
+                itemCode:
+                    form.itemCode.value.trim(),
+
+                reference:
+                    form.reference.value.trim(),
+
                 description:
                     form.description.value.trim(),
-                supplier: form.supplier.value.trim(),
 
-                quantity: Number(form.quantity.value),
+                supplier:
+                    form.supplier.value.trim(),
+
+                quantity:
+                    Number(
+                        form.quantity.value
+                    ),
+
                 unitValue:
-                    Number(form.unitValue.value),
+                    Number(
+                        form.unitValue.value
+                    ),
 
-                ncm: form.ncm.value.trim(),
-                deadline: form.deadline.value.trim(),
-                payment: form.payment.value.trim(),
-                delivery: form.delivery.value.trim(),
+                ncm:
+                    form.ncm.value.trim(),
+
+                deadline:
+                    `${form.deadline.value} dias`,
+
+                payment:
+                    `${form.payment.value} dias`,
+
+                delivery:
+                    form.delivery.value.trim(),
 
                 requestedAt:
                     form.requestedAt.value,
 
-                optionalData: getOptionalData(),
+                optionalData:
+                    getOptionalData()
             };
+
+
+            pendingSubmission = {
+                ...data,
+
+                totalValue:
+                    data.quantity *
+                    data.unitValue
+            };
+
 
             google.script.run
                 .withSuccessHandler(
@@ -332,79 +2740,283 @@
         }
 
 
-        function handleRegistrationSuccess(result) {
+        function handleRegistrationSuccess(
+            result
+        ) {
             setLoading(false);
 
-            if (!result.success) {
-                showMessage(
-                    result.message ||
-                    'Não foi possível salvar a cotação.',
-                    'error'
-                );
+
+            if (
+                !result ||
+                !result.success
+            ) {
+                const message =
+                    result?.message || '';
+
+
+                if (
+                    !handleBackendValidation(
+                        message
+                    )
+                ) {
+                    console.error(
+                        'Backend error:',
+                        message
+                    );
+
+
+                    showMessage(
+                        t('genericError'),
+                        'error'
+                    );
+                }
+
 
                 return;
             }
 
-            let message =
-                'Cotação cadastrada com sucesso.';
 
-            if (
-                result.warnings &&
-                result.warnings.length > 0
-            ) {
-                message +=
-                    '\n\nAvisos:\n' +
-                    result.warnings.join('\n');
-            }
+            const hasWarnings =
+                Array.isArray(
+                    result.warnings
+                ) &&
+                result.warnings.length > 0;
+
+
+            const successText =
+                hasWarnings
+                    ? t(
+                        'successWithWarning'
+                    )
+                    : t('successMessage');
+
 
             showMessage(
-                message,
-                result.warnings?.length
+                successText,
+                hasWarnings
                     ? 'warning'
                     : 'success'
             );
 
-            resetForm();
+
+            showToast(successText);
+
+
+            renderSuccessSummary(
+                result,
+                pendingSubmission
+            );
+
+
+            resetForm({
+                preserveMessage: true,
+                preserveSummary: true
+            });
+
+
+            pendingSubmission = null;
         }
 
 
-        function handleCommunicationFailure(error) {
+        function handleCommunicationFailure(
+            error
+        ) {
             setLoading(false);
+
 
             console.error(error);
 
+
             showMessage(
-                'Erro de comunicação com o servidor.',
+                t('communicationError'),
                 'error'
             );
         }
 
 
+        /* =========================================
+           SUCCESS SUMMARY
+           ========================================= */
+
+        function renderSuccessSummary(
+            result,
+            submission
+        ) {
+            if (!submission) {
+                return;
+            }
+
+
+            document.getElementById(
+                'summary-rfp'
+            ).textContent =
+                submission.rfp;
+
+
+            document.getElementById(
+                'summary-item-code'
+            ).textContent =
+                submission.itemCode;
+
+
+            document.getElementById(
+                'summary-supplier'
+            ).textContent =
+                submission.supplier;
+
+
+            const locale =
+                currentLanguage === 'pt'
+                    ? 'pt-BR'
+                    : 'en-US';
+
+
+            document.getElementById(
+                'summary-total'
+            ).textContent =
+                submission.totalValue
+                    .toLocaleString(
+                        locale,
+                        {
+                            style: 'currency',
+                            currency: 'BRL'
+                        }
+                    );
+
+
+            document.getElementById(
+                'summary-id'
+            ).textContent =
+                result.quotation?.id ||
+                '—';
+
+
+            document.getElementById(
+                'summary-status'
+            ).textContent =
+                result.quotation?.status ||
+                'ACTIVE';
+
+
+            successSummary.hidden = false;
+
+
+            successSummary.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
+            });
+        }
+
+
+        document
+            .getElementById(
+                'close-success-summary'
+            )
+            .addEventListener(
+                'click',
+                () => {
+                    successSummary.hidden =
+                        true;
+                }
+            );
+
+
+        /* =========================================
+           UI HELPERS
+           ========================================= */
+
         function setLoading(isLoading) {
-            submitButton.disabled = isLoading;
+            submitButton.disabled =
+                isLoading;
+
 
             submitButton.textContent =
                 isLoading
-                    ? 'Salvando...'
-                    : 'Salvar cotação';
+                    ? t('savingButton')
+                    : t('saveButton');
         }
 
 
-        function showMessage(message, type) {
-            formMessage.textContent = message;
-            formMessage.dataset.type = type;
+        function showMessage(
+            message,
+            type
+        ) {
+            formMessage.textContent =
+                message;
+
+            formMessage.dataset.type =
+                type;
         }
 
 
-        function resetForm() {
+        let toastTimer;
+
+
+        function showToast(message) {
+            successToast.textContent =
+                message;
+
+
+            successToast.classList.add(
+                'is-visible'
+            );
+
+
+            window.clearTimeout(
+                toastTimer
+            );
+
+
+            toastTimer =
+                window.setTimeout(
+                    () => {
+                        successToast
+                            .classList.remove(
+                                'is-visible'
+                            );
+                    },
+                    4200
+                );
+        }
+
+
+        function resetForm(options = {}) {
             form.reset();
 
-            optionalDataContainer.innerHTML = '';
+            clearAllFieldErrors();
 
             totalValueInput.value = '';
 
-            quantityInput.focus();
+            updateTotal();
+
+
+            if (
+                !options.preserveMessage
+            ) {
+                formMessage.textContent = '';
+
+                formMessage.dataset.type = '';
+            }
+
+
+            if (
+                !options.preserveSummary
+            ) {
+                successSummary.hidden = true;
+            }
+
+
+            form.rfp.focus();
         }
+
+
+        /* =========================================
+           INITIALIZE
+           ========================================= */
+
+        applyTranslations();
+        updateTotal();
+
     </script>
 
 </body>
