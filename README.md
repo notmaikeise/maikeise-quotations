@@ -28,7 +28,11 @@
 
 <br>
 
-[🇧🇷 Português](#-português) • [🇺🇸 English](#-english) • [📚 Documentação](#-documentação) • [🗺️ Roadmap](#️-roadmap)
+[🇧🇷 Português](#-português) •
+[🇺🇸 English](#-english) •
+[🛠️ Instalação](#️-executando-sua-própria-instância) •
+[📚 Documentação](#-documentação) •
+[🗺️ Roadmap](#️-roadmap)
 
 </div>
 
@@ -53,8 +57,6 @@ A primeira versão foi entregue em **16 de setembro de 2026** e representa o pri
 
 Antes do sistema, a consulta dependia de pesquisa manual em documentos e registros históricos.
 
-Isso tornava tarefas simples mais demoradas:
-
 ```text
 Encontrar uma cotação
         ↓
@@ -67,7 +69,7 @@ Conferir informações
 Repetir o processo quando necessário
 ```
 
-O objetivo do projeto foi transformar esse fluxo em:
+O objetivo do Maikeise Quotations foi transformar esse fluxo em:
 
 ```text
 Pesquisar
@@ -165,13 +167,13 @@ A interface foi pensada para ser:
 | 🟨 Dourado | `#F2A81D` | Destaques e acentos |
 | ⬜ Cinza claro | `#F2F2F2` | Fundo e superfícies |
 
-A aplicação também possui suporte a:
+A aplicação também possui:
 
-- 🇧🇷 Português
-- 🇺🇸 Inglês
+- 🇧🇷 Português;
+- 🇺🇸 Inglês;
 - navegação responsiva;
 - estados de foco;
-- `prefers-reduced-motion`;
+- suporte a `prefers-reduced-motion`;
 - mensagens de sucesso, erro, carregamento e ausência de resultados.
 
 ---
@@ -226,13 +228,7 @@ Detalhes
 | Deploy | Google Apps Script Web App |
 | Documentação | Markdown |
 
-A stack foi escolhida para manter:
-
-- baixo custo operacional;
-- implantação simples;
-- manutenção acessível;
-- boa velocidade de desenvolvimento;
-- possibilidade de evolução futura.
+A stack foi escolhida para manter baixo custo operacional, implantação simples, manutenção acessível e possibilidade de evolução futura.
 
 ---
 
@@ -251,7 +247,8 @@ maikeise-quotations/
 │   ├── application/
 │   ├── domain/
 │   ├── infrastructure/
-│   └── web/
+│   ├── web/
+│   └── appsscript.json
 │
 ├── tests/
 │   └── domain/
@@ -268,8 +265,6 @@ maikeise-quotations/
 
 A documentação técnica completa está em [`docs/`](docs/).
 
-Ela inclui:
-
 | Documento | Status |
 |---|---|
 | DDD / Pré-Projeto | ✅ |
@@ -285,22 +280,232 @@ Ela inclui:
 
 ---
 
+# 🛠️ Executando sua própria instância
+
+> [!IMPORTANT]
+> Este repositório **não contém o ambiente de produção do cliente**.
+>
+> A planilha real, IDs privados, credenciais, URLs de deployment e dados comerciais foram intencionalmente removidos do versionamento.
+>
+> Cada instalação deve utilizar **sua própria conta Google, sua própria planilha e seu próprio projeto Apps Script**.
+
+## 1. Pré-requisitos
+
+Tenha instalado:
+
+- Git
+- Node.js
+- npm
+- uma conta Google
+
+Instale o Google Clasp:
+
+```bash
+npm install -g @google/clasp
+```
+
+Confira:
+
+```bash
+clasp --version
+```
+
+---
+
+## 2. Clone o repositório
+
+```bash
+git clone https://github.com/SEU-USUARIO/maikeise-quotations.git
+cd maikeise-quotations
+```
+
+Substitua `SEU-USUARIO` pelo usuário ou organização que hospeda este repositório.
+
+---
+
+## 3. Autentique o Clasp
+
+```bash
+clasp login
+```
+
+O navegador será aberto para autorização da conta Google.
+
+Também é necessário habilitar a **Google Apps Script API** na conta utilizada.
+
+---
+
+## 4. Crie sua planilha
+
+Crie uma nova planilha no Google Sheets.
+
+Exemplo:
+
+```text
+Maikeise Quotations - DEV
+```
+
+Depois:
+
+```text
+Extensões
+→ Apps Script
+```
+
+Isso criará um projeto Apps Script vinculado à planilha.
+
+---
+
+## 5. Obtenha o Script ID
+
+No editor do Apps Script:
+
+```text
+Configurações do projeto
+→ IDs
+→ Script ID
+```
+
+> [!CAUTION]
+> Não publique o Script ID utilizado em ambientes reais.
+
+---
+
+## 6. Configure o `.clasp.json`
+
+Na raiz do projeto, crie:
+
+```text
+.clasp.json
+```
+
+Com:
+
+```json
+{
+  "scriptId": "YOUR_SCRIPT_ID",
+  "rootDir": "src"
+}
+```
+
+O `.clasp.json` é propositalmente ignorado pelo Git e não deve ser commitado.
+
+---
+
+## 7. Envie o código ao Apps Script
+
+```bash
+clasp push
+```
+
+Caso sua instalação do Clasp apresente o aviso de segurança relacionado a symlinks:
+
+```bash
+clasp --allow-symlinks push
+```
+
+---
+
+## 8. Inicialize a estrutura de dados
+
+No editor do Apps Script, execute:
+
+```javascript
+setupDatabase()
+```
+
+A aplicação utiliza:
+
+```text
+COTACOES
+DADOS_OPCIONAIS
+AUDITORIA
+CONFIG
+```
+
+---
+
+## 9. Teste
+
+Antes da implantação, utilize apenas **dados fictícios**.
+
+Valide:
+
+```text
+✓ Cadastro de cotação
+✓ Cálculo do valor total
+✓ Informações adicionais
+✓ Pesquisa por RFP
+✓ Pesquisa por Código do item
+✓ Múltiplos resultados
+✓ Ver detalhes
+```
+
+---
+
+## 10. Faça o deployment
+
+No Apps Script:
+
+```text
+Implantar
+→ Nova implantação
+→ Aplicativo da Web
+```
+
+Configure as permissões de acordo com o ambiente.
+
+O Google fornecerá uma URL semelhante a:
+
+```text
+https://script.google.com/macros/s/.../exec
+```
+
+Essa URL pertence exclusivamente à sua instalação.
+
+---
+
+## 11. Atualizações futuras
+
+Depois de alterar o código local:
+
+```bash
+git pull
+clasp push
+```
+
+Ou, se necessário:
+
+```bash
+clasp --allow-symlinks push
+```
+
+Crie uma nova versão do deployment quando quiser promover alterações para o ambiente utilizado pelos usuários.
+
+---
+
+## ⚠️ Nunca versione
+
+```text
+.clasp.json
+.env
+Script IDs reais
+Spreadsheet IDs reais
+URLs privadas de deployment
+Tokens
+Credenciais
+Dados reais de clientes
+Dados reais de fornecedores
+Cotações comerciais reais
+```
+
+---
+
 ## 🔐 Segurança e privacidade
 
-Este repositório deve conter apenas **código-fonte e documentação técnica**.
+A versão pública contém somente código-fonte e documentação técnica.
 
-Não devem ser versionados:
-
-- dados reais de cotações;
-- informações reais de fornecedores;
-- credenciais;
-- tokens;
-- IDs privados de planilhas;
-- Script IDs;
-- URLs privadas de deployment;
-- dados comerciais sensíveis.
-
-Os exemplos utilizados na documentação e nos testes devem permanecer fictícios.
+Clonar o projeto **não fornece acesso ao ambiente de produção do cliente**. Uma nova instalação exige outra conta Google, outro projeto Apps Script e outra planilha.
 
 ---
 
@@ -308,7 +513,7 @@ Os exemplos utilizados na documentação e nos testes devem permanecer fictício
 
 A `v1.0.0` atende ao escopo da primeira entrega.
 
-Os itens abaixo são **possíveis evoluções**, e não requisitos pendentes da versão entregue.
+Os itens abaixo são **possíveis evoluções**, e não requisitos pendentes.
 
 ### Gestão
 
@@ -351,8 +556,6 @@ v1.x.0  → Novas funcionalidades compatíveis
 v2.0.0  → Mudanças significativas de produto ou arquitetura
 ```
 
-As versões entregues devem permanecer preservadas através de **Git tags**.
-
 ---
 
 ## 💛 Uma nota pessoal
@@ -367,11 +570,11 @@ O **Maikeise Quotations** representa muito mais do que uma aplicação finalizad
 
 Espero que esse projeto ajude a abrir muitas portas.
 
-Que venham novos sistemas.  
-Novos clientes.  
-Novos desafios.  
-Novas ideias.  
-E projetos cada vez maiores.
+**Que venham novos sistemas.**  
+**Novos clientes.**  
+**Novos desafios.**  
+**Novas ideias.**  
+**E projetos cada vez maiores.**
 
 > **Que a v1.0.0 seja menos um ponto final e mais o primeiro marco de muitos futuros.**
 
@@ -434,8 +637,6 @@ flowchart TD
     F --> G[(Google Sheets)]
 ```
 
-The web interface does not access the spreadsheet directly.
-
 ---
 
 ## 🧩 Technology stack
@@ -451,9 +652,108 @@ The web interface does not access the spreadsheet directly.
 
 ---
 
-## 🔭 Future improvements
+# 🛠️ Running your own instance
 
-The items below are possible future improvements and are **not unfinished requirements of v1.0.0**.
+> [!IMPORTANT]
+> This repository does **not** contain the client's production environment.
+>
+> Production spreadsheets, private identifiers, credentials, deployment URLs and commercial records are intentionally excluded from version control.
+
+## 1. Requirements
+
+Install:
+
+- Git
+- Node.js
+- npm
+- Google Clasp
+- a Google account
+
+```bash
+npm install -g @google/clasp
+```
+
+## 2. Clone
+
+```bash
+git clone https://github.com/YOUR-USERNAME/maikeise-quotations.git
+cd maikeise-quotations
+```
+
+## 3. Authenticate
+
+```bash
+clasp login
+```
+
+Enable the **Google Apps Script API** for your Google account.
+
+## 4. Create the environment
+
+Create a Google Sheets spreadsheet and open:
+
+```text
+Extensions
+→ Apps Script
+```
+
+Copy the Script ID from project settings.
+
+Create `.clasp.json`:
+
+```json
+{
+  "scriptId": "YOUR_SCRIPT_ID",
+  "rootDir": "src"
+}
+```
+
+## 5. Push the source
+
+```bash
+clasp push
+```
+
+If needed:
+
+```bash
+clasp --allow-symlinks push
+```
+
+## 6. Initialize the spreadsheet
+
+Run:
+
+```javascript
+setupDatabase()
+```
+
+This prepares:
+
+```text
+COTACOES
+DADOS_OPCIONAIS
+AUDITORIA
+CONFIG
+```
+
+## 7. Test
+
+Use fictitious data and validate registration, search and detail views.
+
+## 8. Deploy
+
+```text
+Deploy
+→ New deployment
+→ Web app
+```
+
+Configure access according to your environment.
+
+---
+
+## 🔭 Future improvements
 
 - [ ] Quotation editing
 - [ ] Quotation deactivation
@@ -484,11 +784,11 @@ Seeing the system working — and seeing the client happy with it — makes me g
 
 I hope this project opens many doors.
 
-More systems.  
-More clients.  
-More challenges.  
-More ideas.  
-And increasingly ambitious projects.
+**More systems.**  
+**More clients.**  
+**More challenges.**  
+**More ideas.**  
+**And increasingly ambitious projects.**
 
 > **May v1.0.0 be less of an ending and more of the first milestone of many futures.**
 
@@ -499,6 +799,8 @@ And increasingly ambitious projects.
 This repository contains source code and technical documentation.
 
 Real quotation records, supplier information, credentials, tokens, Spreadsheet IDs, Apps Script IDs, private deployment URLs and confidential commercial data are intentionally excluded from version control.
+
+Cloning this repository does **not** provide access to the client's production environment.
 
 ---
 
