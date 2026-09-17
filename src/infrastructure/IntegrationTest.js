@@ -151,3 +151,70 @@ function testQuotationRegistration() {
 
     return result;
 }
+
+function testQuotationSearch() {
+    console.log(
+        '=== Maikeise Quotations — Search Test ==='
+    );
+
+    const quotationRepository =
+        new GoogleSheetsQuotationRepository();
+
+    const optionalDataRepository =
+        new GoogleSheetsOptionalDataRepository();
+
+    const service =
+        new QuotationService(
+            quotationRepository,
+            optionalDataRepository
+        );
+
+    /*
+     * Use values that already exist in your
+     * DEV spreadsheet.
+     *
+     * These values should remain fictitious.
+     */
+
+    const rfpResults =
+        service.search({
+            type: 'RFP',
+            value: 'RFP-WEB-001',
+        });
+
+    console.log(
+        `RFP results: ${rfpResults.length}`
+    );
+
+    rfpResults.forEach((quotation) => {
+        console.log(
+            `${quotation.rfp} | ` +
+            `${quotation.itemCode} | ` +
+            `${quotation.supplier}`
+        );
+    });
+
+
+    const itemResults =
+        service.search({
+            type: 'ITEM_CODE',
+            value: '000152',
+        });
+
+    console.log(
+        `Item code results: ${itemResults.length}`
+    );
+
+    itemResults.forEach((quotation) => {
+        console.log(
+            `${quotation.rfp} | ` +
+            `${quotation.itemCode} | ` +
+            `${quotation.supplier}`
+        );
+    });
+
+
+    console.log(
+        '=== Search test completed ==='
+    );
+}

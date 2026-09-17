@@ -109,4 +109,70 @@ class QuotationService {
             return optionalData;
         });
     }
+
+    search(criteria) {
+        if (!criteria) {
+            throw new Error(
+                'Search criteria is required.'
+            );
+        }
+
+        const type = String(
+            criteria.type || ''
+        )
+            .trim()
+            .toUpperCase();
+
+        const value = String(
+            criteria.value || ''
+        ).trim();
+
+        if (!value) {
+            throw new Error(
+                'Search value is required.'
+            );
+        }
+
+        const supportedTypes = [
+            'RFP',
+            'ITEM_CODE',
+        ];
+
+        if (!supportedTypes.includes(type)) {
+            throw new Error(
+                'Invalid search type.'
+            );
+        }
+
+        return this.repository.search({
+            type,
+            value,
+        });
+    }
+
+    getDetails(id) {
+        const quotationId = String(id || '').trim();
+
+        if (!quotationId) {
+            throw new Error('Quotation ID is required.');
+        }
+
+        const quotation =
+            this.repository.findById(quotationId);
+
+        if (!quotation) {
+            throw new Error('Quotation not found.');
+        }
+
+        const optionalData =
+            this.optionalDataRepository
+                ? this.optionalDataRepository
+                    .findByQuotationId(quotationId)
+                : [];
+
+        return {
+            quotation,
+            optionalData,
+        };
+    }
 }

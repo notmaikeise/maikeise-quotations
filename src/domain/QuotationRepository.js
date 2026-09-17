@@ -49,4 +49,8 @@ class QuotationRepository {
       'must be implemented.'
     );
   }
+
+  search(criteria) {
+    throw new Error('Method search must be implemented.');
+  }
 }

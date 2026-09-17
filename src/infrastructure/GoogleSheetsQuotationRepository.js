@@ -200,4 +200,75 @@ class GoogleSheetsQuotationRepository
             .trim()
             .toLowerCase();
     }
+
+    search(criteria) {
+        if (!criteria) {
+            throw new Error('Search criteria is required.');
+        }
+
+        const type = String(criteria.type || '')
+            .trim()
+            .toUpperCase();
+
+        const value = String(criteria.value || '')
+            .trim();
+
+        if (!value) {
+            throw new Error('Search value is required.');
+        }
+
+        const supportedTypes = [
+            'RFP',
+            'ITEM_CODE',
+        ];
+
+        if (!supportedTypes.includes(type)) {
+            throw new Error(
+                `Unsupported search type: ${type}`
+            );
+        }
+
+        const data = this.sheet
+            .getDataRange()
+            .getValues();
+
+        if (data.length <= 1) {
+            return [];
+        }
+
+        const normalizedValue =
+            this.normalizeText_(value);
+
+        const results = [];
+
+        for (let index = 1; index < data.length; index++) {
+            const row = data[index];
+
+            const rfp =
+                this.normalizeText_(row[1]);
+
+            const itemCode =
+                this.normalizeText_(row[2]);
+
+            let matches = false;
+
+            if (type === 'RFP') {
+                matches =
+                    rfp === normalizedValue;
+            }
+
+            if (type === 'ITEM_CODE') {
+                matches =
+                    itemCode === normalizedValue;
+            }
+
+            if (matches) {
+                results.push(
+                    this.mapRowToQuotation_(row)
+                );
+            }
+        }
+
+        return results;
+    }
 }

@@ -922,28 +922,650 @@
                 bottom: 16px;
             }
 
-            .input-with-suffix {
-                position: relative;
+        }
+
+        .input-with-suffix {
+            position: relative;
+        }
+
+        .input-with-suffix input {
+            padding-right: 70px;
+        }
+
+        .input-suffix {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+
+            transform: translateY(-50%);
+
+            color: var(--text-secondary);
+
+            font-size: 0.88rem;
+            font-weight: 700;
+
+            pointer-events: none;
+        }
+
+        /* =========================================
+   SEARCH
+   ========================================= */
+
+        .search-panel {
+            padding: 32px;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            background: var(--surface);
+            box-shadow: var(--shadow-card);
+        }
+
+
+        .search-type {
+            margin-bottom: 24px;
+        }
+
+
+        .search-type__label {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: var(--primary);
+
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+
+        .search-type__options {
+            display: inline-flex;
+
+            padding: 4px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: var(--surface-soft);
+        }
+
+
+        .search-type-button {
+            min-height: 42px;
+
+            padding: 0 18px;
+
+            border: 0;
+            border-radius: 7px;
+
+            background: transparent;
+            color: var(--text-secondary);
+
+            font-weight: 700;
+
+            transition:
+                background var(--transition),
+                color var(--transition),
+                box-shadow var(--transition);
+        }
+
+
+        .search-type-button:hover {
+            color: var(--primary);
+        }
+
+
+        .search-type-button.is-active {
+            background: var(--primary);
+            color: #FFFFFF;
+
+            box-shadow:
+                0 4px 12px rgba(32, 55, 64, 0.16);
+        }
+
+
+        .search-control {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 14px;
+
+            align-items: end;
+        }
+
+
+        .search-input-wrapper label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--primary);
+
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+
+        .search-input-wrapper input {
+            width: 100%;
+            min-height: 54px;
+
+            padding: 13px 16px;
+
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+
+            outline: none;
+
+            background: #FFFFFF;
+            color: var(--text);
+
+            transition:
+                border-color var(--transition),
+                box-shadow var(--transition);
+        }
+
+
+        .search-input-wrapper input:hover {
+            border-color: #AEBCC0;
+        }
+
+
+        .search-input-wrapper input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 4px rgba(32, 55, 64, 0.10);
+        }
+
+
+        #search-message {
+            margin-top: 18px;
+
+            min-height: 24px;
+
+            color: var(--text-secondary);
+        }
+
+
+        #search-message[data-type="error"] {
+            color: var(--danger);
+
+            font-weight: 650;
+        }
+
+
+        .search-results {
+            margin-top: 24px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            background: var(--surface);
+            box-shadow: var(--shadow-card);
+        }
+
+
+        .search-results__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding: 24px 28px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .search-results__header h2 {
+            margin: 0 0 4px;
+
+            color: var(--primary);
+
+            font-size: 1.1rem;
+            font-weight: 760;
+        }
+
+
+        .search-results__header p {
+            margin: 0;
+
+            color: var(--text-secondary);
+
+            font-size: 0.88rem;
+        }
+
+
+        .results-table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        .results-table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+
+        .results-table th {
+            padding: 14px 20px;
+
+            background: #F8FAFA;
+            color: var(--text-secondary);
+
+            font-size: 0.74rem;
+            font-weight: 800;
+
+            text-align: left;
+            text-transform: uppercase;
+
+            letter-spacing: 0.055em;
+
+            white-space: nowrap;
+        }
+
+
+        .results-table td {
+            padding: 19px 20px;
+
+            border-top: 1px solid #EDF0F1;
+
+            vertical-align: middle;
+        }
+
+
+        .results-table tbody tr {
+            transition:
+                background var(--transition);
+        }
+
+
+        .results-table tbody tr:hover {
+            background: #FAFBFB;
+        }
+
+
+        .result-technical {
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+        }
+
+
+        .result-details-button {
+            min-height: 40px;
+
+            padding: 0 16px;
+
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+
+            background: transparent;
+            color: var(--primary);
+
+            font-weight: 750;
+
+            white-space: nowrap;
+
+            transition:
+                background var(--transition),
+                color var(--transition),
+                transform var(--transition);
+        }
+
+
+        .result-details-button:hover {
+            background: var(--primary);
+            color: #FFFFFF;
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================================
+        QUOTATION DETAILS MODAL
+        ========================================= */
+
+        .details-modal {
+            position: fixed;
+            inset: 0;
+
+            z-index: 200;
+
+            display: grid;
+            place-items: center;
+
+            padding: 28px;
+        }
+
+
+        .details-modal__backdrop {
+            position: absolute;
+            inset: 0;
+
+            background: rgba(15, 29, 34, 0.58);
+
+            backdrop-filter: blur(5px);
+        }
+
+
+        .details-dialog {
+            position: relative;
+            z-index: 1;
+
+            width: min(1040px, 100%);
+            max-height: calc(100vh - 56px);
+
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+
+            background: var(--surface);
+
+            box-shadow:
+                0 30px 80px rgba(13, 28, 33, 0.28);
+
+            animation:
+                details-enter 220ms ease;
+        }
+
+
+        .details-header {
+            flex: 0 0 auto;
+
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+
+            padding: 28px 32px 24px;
+
+            border-bottom: 1px solid var(--border);
+
+            background: #FFFFFF;
+        }
+
+
+        .details-eyebrow {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: var(--warning);
+
+            font-size: 0.72rem;
+            font-weight: 800;
+
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+
+        .details-header h2 {
+            margin: 0 0 4px;
+
+            color: var(--primary);
+
+            font-size: 1.65rem;
+            font-weight: 780;
+
+            letter-spacing: -0.03em;
+        }
+
+
+        .details-header p {
+            margin: 0;
+
+            color: var(--text-secondary);
+        }
+
+
+        .details-close {
+            width: 42px;
+            height: 42px;
+
+            flex: 0 0 auto;
+
+            display: grid;
+            place-items: center;
+
+            padding: 0;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: #FFFFFF;
+            color: var(--primary);
+
+            font-size: 1.4rem;
+            line-height: 1;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition);
+        }
+
+
+        .details-close:hover {
+            border-color: var(--border-strong);
+
+            background: var(--surface-soft);
+        }
+
+
+        .details-loading {
+            padding: 60px 32px;
+
+            color: var(--text-secondary);
+
+            text-align: center;
+        }
+
+
+        .details-content {
+            overflow-y: auto;
+
+            padding: 30px 32px 36px;
+
+            background: #F7F9F9;
+        }
+
+
+        .detail-section {
+            margin-bottom: 22px;
+
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            background: #FFFFFF;
+        }
+
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .detail-section__header {
+            padding: 17px 20px;
+
+            border-bottom: 1px solid #EDF0F1;
+
+            background: #FCFDFD;
+        }
+
+
+        .detail-section__header h3 {
+            margin: 0;
+
+            color: var(--primary);
+
+            font-size: 0.98rem;
+            font-weight: 780;
+        }
+
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+
+        .detail-item {
+            min-width: 0;
+
+            padding: 18px 20px;
+
+            border-bottom: 1px solid #EDF0F1;
+        }
+
+
+        .detail-item:nth-child(odd) {
+            border-right: 1px solid #EDF0F1;
+        }
+
+
+        .detail-item.full {
+            grid-column: 1 / -1;
+
+            border-right: 0;
+        }
+
+
+        .detail-item__label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: var(--text-secondary);
+
+            font-size: 0.72rem;
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.055em;
+        }
+
+
+        .detail-item__value {
+            color: var(--primary);
+
+            font-size: 0.96rem;
+
+            overflow-wrap: anywhere;
+
+            white-space: pre-wrap;
+        }
+
+
+        .detail-item__value.mono {
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+        }
+
+
+        .detail-total {
+            color: var(--primary);
+
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+
+        @keyframes details-enter {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(14px) scale(0.985);
             }
 
-            .input-with-suffix input {
-                padding-right: 70px;
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0) scale(1);
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .search-panel {
+                padding: 22px 20px;
             }
 
-            .input-suffix {
-                position: absolute;
-                top: 50%;
-                right: 15px;
 
-                transform: translateY(-50%);
-
-                color: var(--text-secondary);
-
-                font-size: 0.88rem;
-                font-weight: 700;
-
-                pointer-events: none;
+            .search-type__options {
+                width: 100%;
             }
+
+
+            .search-type-button {
+                flex: 1;
+            }
+
+
+            .search-control {
+                grid-template-columns: 1fr;
+            }
+
+
+            .search-control .primary-button {
+                width: 100%;
+            }
+
+
+            .details-modal {
+                padding: 12px;
+            }
+
+
+            .details-dialog {
+                max-height:
+                    calc(100vh - 24px);
+
+                border-radius: 16px;
+            }
+
+
+            .details-header {
+                padding: 22px 20px;
+            }
+
+
+            .details-content {
+                padding: 20px;
+            }
+
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .detail-item:nth-child(odd) {
+                border-right: 0;
+            }
+
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1022,9 +1644,93 @@
                 </p>
             </header>
 
-            <div class="placeholder-panel" data-i18n="searchPlaceholder">
-                A consulta de cotações será implementada nesta área.
-            </div>
+            <section class="search-panel">
+
+                <div class="search-type">
+
+                    <span class="search-type__label">
+                        Pesquisar por
+                    </span>
+
+                    <div class="search-type__options">
+
+                        <button type="button" class="search-type-button is-active" data-search-type="RFP">
+                            RFP
+                        </button>
+
+                        <button type="button" class="search-type-button" data-search-type="ITEM_CODE">
+                            Código do item
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="search-control">
+
+                    <div class="search-input-wrapper">
+
+                        <label for="quotation-search-input" id="quotation-search-label">
+                            RFP
+                        </label>
+
+                        <input id="quotation-search-input" type="text" placeholder="Digite o RFP" autocomplete="off">
+
+                    </div>
+
+
+                    <button type="button" id="quotation-search-button" class="primary-button">
+                        Buscar
+                    </button>
+
+                </div>
+
+
+                <div id="search-message" role="status" aria-live="polite"></div>
+
+            </section>
+
+
+            <section id="search-results" class="search-results" hidden>
+
+                <div class="search-results__header">
+
+                    <div>
+                        <h2>
+                            Cotações encontradas
+                        </h2>
+
+                        <p id="search-results-count"></p>
+                    </div>
+
+                </div>
+
+
+                <div class="results-table-wrapper">
+
+                    <table class="results-table">
+
+                        <thead>
+                            <tr>
+                                <th>RFP</th>
+                                <th>Código do item</th>
+                                <th>Fornecedor</th>
+                                <th>Data solicitada</th>
+                                <th>Valor total</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="search-results-body">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
         </section>
 
 
@@ -1092,12 +1798,6 @@
                         </span>
 
                         <strong id="summary-total"></strong>
-                    </div>
-
-                    <div class="summary-item">
-                        <span>ID</span>
-
-                        <strong id="summary-id" class="mono"></strong>
                     </div>
 
                     <div class="summary-item">
@@ -1569,6 +2269,44 @@
     <!-- TOAST -->
     <div id="success-toast" class="toast" role="status" aria-live="polite">
         Cotação cadastrada com sucesso.
+    </div>
+
+    <div id="quotation-details-modal" class="details-modal" hidden>
+
+        <div class="details-modal__backdrop" data-close-details></div>
+
+        <div class="details-dialog" role="dialog" aria-modal="true" aria-labelledby="details-title">
+
+            <header class="details-header">
+
+                <div>
+                    <span class="details-eyebrow">
+                        Maikeise Quotations
+                    </span>
+
+                    <h2 id="details-title">
+                        Detalhes da cotação
+                    </h2>
+
+                    <p id="details-subtitle"></p>
+                </div>
+
+                <button type="button" id="close-details-button" class="details-close" aria-label="Fechar">
+                    ×
+                </button>
+
+            </header>
+
+
+            <div id="details-loading" class="details-loading" hidden>
+                Carregando cotação...
+            </div>
+
+
+            <div id="details-content" class="details-content"></div>
+
+        </div>
+
     </div>
 
 
@@ -2885,13 +3623,6 @@
 
 
             document.getElementById(
-                'summary-id'
-            ).textContent =
-                result.quotation?.id ||
-                '—';
-
-
-            document.getElementById(
                 'summary-status'
             ).textContent =
                 result.quotation?.status ||
@@ -3016,6 +3747,795 @@
 
         applyTranslations();
         updateTotal();
+
+        /* =========================================
+        QUOTATION SEARCH
+        ========================================= */
+
+        const searchTypeButtons =
+            document.querySelectorAll(
+                '[data-search-type]'
+            );
+
+        const searchInput =
+            document.getElementById(
+                'quotation-search-input'
+            );
+
+        const searchLabel =
+            document.getElementById(
+                'quotation-search-label'
+            );
+
+        const searchButton =
+            document.getElementById(
+                'quotation-search-button'
+            );
+
+        const searchMessage =
+            document.getElementById(
+                'search-message'
+            );
+
+        const searchResults =
+            document.getElementById(
+                'search-results'
+            );
+
+        const searchResultsBody =
+            document.getElementById(
+                'search-results-body'
+            );
+
+        const searchResultsCount =
+            document.getElementById(
+                'search-results-count'
+            );
+
+
+        let currentSearchType = 'RFP';
+
+        searchTypeButtons.forEach(
+            (button) => {
+                button.addEventListener(
+                    'click',
+                    () => {
+                        currentSearchType =
+                            button.dataset.searchType;
+
+
+                        searchTypeButtons
+                            .forEach(
+                                (item) => {
+                                    item.classList.remove(
+                                        'is-active'
+                                    );
+                                }
+                            );
+
+
+                        button.classList.add(
+                            'is-active'
+                        );
+
+
+                        updateSearchField();
+
+
+                        searchInput.focus();
+                    }
+                );
+            }
+        );
+
+        function updateSearchField() {
+            if (
+                currentSearchType === 'RFP'
+            ) {
+                searchLabel.textContent =
+                    'RFP';
+
+                searchInput.placeholder =
+                    'Digite o RFP';
+
+                return;
+            }
+
+
+            searchLabel.textContent =
+                'Código do item';
+
+            searchInput.placeholder =
+                'Digite o código do item';
+        }
+
+        searchButton.addEventListener(
+            'click',
+            searchQuotations
+        );
+
+        searchInput.addEventListener(
+            'keydown',
+            (event) => {
+                if (event.key === 'Enter') {
+                    searchQuotations();
+                }
+            }
+        );
+
+        function searchQuotations() {
+            const value =
+                searchInput.value.trim();
+
+
+            if (!value) {
+                searchMessage.textContent =
+                    currentSearchType === 'RFP'
+                        ? 'Informe o RFP que deseja pesquisar.'
+                        : 'Informe o código do item que deseja pesquisar.';
+
+                searchMessage.dataset.type =
+                    'error';
+
+                searchInput.focus();
+
+                return;
+            }
+
+
+            setSearchLoading(true);
+
+
+            searchMessage.textContent =
+                'Buscando cotações...';
+
+            searchMessage.dataset.type =
+                'loading';
+
+
+            searchResults.hidden = true;
+
+
+            google.script.run
+                .withSuccessHandler(
+                    handleSearchSuccess
+                )
+                .withFailureHandler(
+                    handleSearchFailure
+                )
+                .searchQuotations({
+                    type: currentSearchType,
+                    value
+                });
+        }
+
+        function handleSearchSuccess(result) {
+            setSearchLoading(false);
+
+
+            if (!result || !result.success) {
+                searchMessage.textContent =
+                    'Não foi possível realizar a consulta.';
+
+                searchMessage.dataset.type =
+                    'error';
+
+                return;
+            }
+
+
+            const results =
+                result.results || [];
+
+
+            if (results.length === 0) {
+                searchResults.hidden = true;
+
+                searchMessage.textContent =
+                    'Nenhuma cotação encontrada.';
+
+                searchMessage.dataset.type =
+                    'empty';
+
+                return;
+            }
+
+
+            searchMessage.textContent = '';
+            searchMessage.dataset.type = '';
+
+
+            renderSearchResults(results);
+        }
+
+        function handleSearchFailure(error) {
+            setSearchLoading(false);
+
+
+            console.error(error);
+
+
+            searchResults.hidden = true;
+
+
+            searchMessage.textContent =
+                'Erro de comunicação com o servidor.';
+
+            searchMessage.dataset.type =
+                'error';
+        }
+
+        function renderSearchResults(results) {
+            searchResultsBody.innerHTML = '';
+
+
+            results.forEach((quotation) => {
+
+                const row =
+                    document.createElement('tr');
+
+
+                row.appendChild(
+                    createResultCell(
+                        quotation.rfp,
+                        true
+                    )
+                );
+
+
+                row.appendChild(
+                    createResultCell(
+                        quotation.itemCode,
+                        true
+                    )
+                );
+
+
+                row.appendChild(
+                    createResultCell(
+                        quotation.supplier
+                    )
+                );
+
+
+                row.appendChild(
+                    createResultCell(
+                        formatSearchDate(
+                            quotation.requestedAt
+                        )
+                    )
+                );
+
+
+                row.appendChild(
+                    createResultCell(
+                        formatSearchCurrency(
+                            quotation.totalValue
+                        )
+                    )
+                );
+
+
+                row.appendChild(
+                    createResultCell(
+                        quotation.status
+                    )
+                );
+
+
+                const actionCell =
+                    document.createElement('td');
+
+
+                const detailsButton =
+                    document.createElement('button');
+
+
+                detailsButton.type = 'button';
+
+                detailsButton.className =
+                    'result-details-button';
+
+                detailsButton.textContent =
+                    'Ver detalhes';
+
+
+                /*
+                 * Important:
+                 * The ID is used internally,
+                 * but is never displayed.
+                 */
+                detailsButton.dataset.quotationId =
+                    quotation.id;
+
+
+                detailsButton.addEventListener(
+                    'click',
+                    () => {
+                        openQuotationDetails(
+                            quotation.id
+                        );
+                    }
+                );
+
+
+                actionCell.appendChild(
+                    detailsButton
+                );
+
+
+                row.appendChild(
+                    actionCell
+                );
+
+
+                searchResultsBody.appendChild(
+                    row
+                );
+            });
+
+
+            searchResultsCount.textContent =
+                results.length === 1
+                    ? '1 cotação encontrada'
+                    : `${results.length} cotações encontradas`;
+
+
+            searchResults.hidden = false;
+        }
+
+        function createResultCell(
+            value,
+            technical = false
+        ) {
+            const cell =
+                document.createElement('td');
+
+
+            cell.textContent =
+                value ?? '—';
+
+
+            if (technical) {
+                cell.classList.add(
+                    'result-technical'
+                );
+            }
+
+
+            return cell;
+        }
+
+        function formatSearchCurrency(value) {
+            const number =
+                Number(value) || 0;
+
+
+            return number.toLocaleString(
+                'pt-BR',
+                {
+                    style: 'currency',
+                    currency: 'BRL'
+                }
+            );
+        }
+
+        function formatSearchDate(value) {
+            if (!value) {
+                return '—';
+            }
+
+
+            const parts =
+                String(value).split('-');
+
+
+            if (parts.length !== 3) {
+                return value;
+            }
+
+
+            return (
+                `${parts[2]}/` +
+                `${parts[1]}/` +
+                `${parts[0]}`
+            );
+        }
+
+        function setSearchLoading(isLoading) {
+            searchButton.disabled =
+                isLoading;
+
+
+            searchButton.textContent =
+                isLoading
+                    ? 'Buscando...'
+                    : 'Buscar';
+        }
+
+        const detailsModal =
+            document.getElementById(
+                'quotation-details-modal'
+            );
+
+        const detailsContent =
+            document.getElementById(
+                'details-content'
+            );
+
+        const detailsLoading =
+            document.getElementById(
+                'details-loading'
+            );
+
+        const detailsSubtitle =
+            document.getElementById(
+                'details-subtitle'
+            );
+
+        const closeDetailsButton =
+            document.getElementById(
+                'close-details-button'
+            );
+
+        function openQuotationDetails(id) {
+            detailsModal.hidden = false;
+
+            document.body.style.overflow =
+                'hidden';
+
+            detailsContent.innerHTML = '';
+
+            detailsLoading.hidden = false;
+
+            detailsSubtitle.textContent =
+                'Carregando informações...';
+
+
+            google.script.run
+                .withSuccessHandler(
+                    handleQuotationDetailsSuccess
+                )
+                .withFailureHandler(
+                    handleQuotationDetailsFailure
+                )
+                .getQuotationDetails(id);
+        }
+
+        function handleQuotationDetailsSuccess(result) {
+            detailsLoading.hidden = true;
+
+
+            if (!result || !result.success) {
+                detailsContent.innerHTML =
+                    `
+            <div class="detail-section">
+                <div class="detail-section__header">
+                    <h3>Não foi possível abrir a cotação</h3>
+                </div>
+
+                <div class="detail-item full">
+                    Tente novamente.
+                </div>
+            </div>
+            `;
+
+                return;
+            }
+
+
+            const quotation =
+                result.quotation;
+
+
+            detailsSubtitle.textContent =
+                `${quotation.rfp} · ${quotation.itemCode}`;
+
+
+            const optional =
+                convertOptionalData(
+                    result.optionalData || []
+                );
+
+
+            detailsContent.innerHTML = `
+        ${renderDetailSection(
+                'Identificação',
+                [
+                    ['RFP', quotation.rfp, true],
+                    [
+                        'Código do item',
+                        quotation.itemCode,
+                        true
+                    ],
+                    [
+                        'Referência',
+                        quotation.reference,
+                        true
+                    ],
+                    [
+                        'Fornecedor',
+                        quotation.supplier
+                    ],
+                    [
+                        'Descrição',
+                        quotation.description,
+                        false,
+                        true
+                    ]
+                ]
+            )}
+
+
+        ${renderDetailSection(
+                'Valores',
+                [
+                    [
+                        'Quantidade',
+                        quotation.quantity
+                    ],
+                    [
+                        'Valor unitário',
+                        formatSearchCurrency(
+                            quotation.unitValue
+                        )
+                    ],
+                    [
+                        'Valor total',
+                        formatSearchCurrency(
+                            quotation.totalValue
+                        )
+                    ]
+                ]
+            )}
+
+
+        ${renderDetailSection(
+                'Informações comerciais',
+                [
+                    [
+                        'NCM',
+                        quotation.ncm,
+                        true
+                    ],
+                    [
+                        'Prazo de entrega',
+                        quotation.deadline
+                    ],
+                    [
+                        'Prazo de pagamento',
+                        quotation.payment
+                    ],
+                    [
+                        'Entrega',
+                        quotation.delivery
+                    ],
+                    [
+                        'Data solicitada',
+                        formatSearchDate(
+                            quotation.requestedAt
+                        )
+                    ],
+                    [
+                        'Status',
+                        quotation.status
+                    ]
+                ]
+            )}
+
+
+        ${renderOptionalDetails(optional)}
+    `;
+        }
+
+        function handleQuotationDetailsFailure(error) {
+            detailsLoading.hidden = true;
+
+            console.error(
+                'Quotation details error:',
+                error
+            );
+
+            detailsSubtitle.textContent =
+                'Não foi possível carregar os detalhes.';
+
+            detailsContent.innerHTML = `
+                <section class="detail-section">
+                    <header class="detail-section__header">
+                        <h3>Erro ao carregar</h3>
+                    </header>
+
+                    <div class="detail-grid">
+                        <div class="detail-item full">
+                            <span class="detail-item__value">
+                                Não foi possível carregar esta cotação. Feche esta janela e tente novamente.
+                            </span>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+
+        function renderDetailSection(
+            title,
+            items
+        ) {
+            const content =
+                items
+                    .filter(
+                        ([, value]) =>
+                            value !== null &&
+                            value !== undefined &&
+                            String(value).trim() !== ''
+                    )
+                    .map(
+                        ([
+                            label,
+                            value,
+                            technical = false,
+                            full = false
+                        ]) => `
+                    <div
+                        class="
+                            detail-item
+                            ${full ? 'full' : ''}
+                        "
+                    >
+                        <span
+                            class="
+                                detail-item__label
+                            "
+                        >
+                            ${escapeHtml(label)}
+                        </span>
+
+                        <div
+                            class="
+                                detail-item__value
+                                ${technical ? 'mono' : ''}
+                            "
+                        >
+                            ${escapeHtml(
+                            String(value)
+                        )}
+                        </div>
+                    </div>
+                `
+                    )
+                    .join('');
+
+
+            return `
+        <section class="detail-section">
+
+            <header
+                class="detail-section__header"
+            >
+                <h3>
+                    ${escapeHtml(title)}
+                </h3>
+            </header>
+
+            <div class="detail-grid">
+                ${content}
+            </div>
+
+        </section>
+    `;
+        }
+
+        function escapeHtml(value) {
+            const element =
+                document.createElement('div');
+
+            element.textContent =
+                value ?? '';
+
+            return element.innerHTML;
+        }
+
+        function convertOptionalData(entries) {
+            const result = {};
+
+
+            entries.forEach((entry) => {
+                result[entry.key] =
+                    entry.value;
+            });
+
+
+            return result;
+        }
+
+        function renderOptionalDetails(optional) {
+            const items = [
+                [
+                    'Responsável',
+                    optional.OWNER
+                ],
+
+                [
+                    'Região',
+                    optional.REGION
+                ],
+
+                [
+                    'Centro',
+                    optional.CENTER
+                ],
+
+                [
+                    'Moeda',
+                    optional.CURRENCY,
+                    true
+                ],
+
+                [
+                    'Impostos',
+                    optional.TAXES
+                ],
+
+                [
+                    'Observações',
+                    optional.NOTES,
+                    false,
+                    true
+                ]
+            ];
+
+
+            const hasData =
+                items.some(
+                    ([, value]) =>
+                        value !== undefined &&
+                        value !== null &&
+                        String(value).trim() !== ''
+                );
+
+
+            if (!hasData) {
+                return '';
+            }
+
+
+            return renderDetailSection(
+                'Informações adicionais',
+                items
+            );
+        }
+
+        function closeQuotationDetails() {
+            detailsModal.hidden = true;
+
+            document.body.style.overflow = '';
+        }
+
+        closeDetailsButton.addEventListener(
+            'click',
+            closeQuotationDetails
+        );
+
+        document
+            .querySelector(
+                '[data-close-details]'
+            )
+            .addEventListener(
+                'click',
+                closeQuotationDetails
+            );
+
+        document.addEventListener(
+            'keydown',
+            (event) => {
+                if (
+                    event.key === 'Escape' &&
+                    !detailsModal.hidden
+                ) {
+                    closeQuotationDetails();
+                }
+            }
+        );
 
     </script>
 
