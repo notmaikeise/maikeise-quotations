@@ -632,9 +632,32 @@ flowchart TD
     A[Web Interface] --> B[WebController]
     B --> C[QuotationService]
     C --> D[Domain]
-    C --> E[Repositories]
-    E --> F[Google Sheets Infrastructure]
-    F --> G[(Google Sheets)]
+    C --> E[QuotationRepository]
+    C --> F[OptionalDataRepository]
+    E --> G[GoogleSheetsQuotationRepository]
+    F --> H[GoogleSheetsOptionalDataRepository]
+    G --> I[(Google Sheets)]
+    H --> I
+```
+
+### Fluxo principal
+
+```text
+Registration
+   ↓
+Validation
+   ↓
+Application Service
+   ↓
+Repository
+   ↓
+Google Sheets
+   ↓
+Search
+   ↓
+Results
+   ↓
+Details
 ```
 
 ---
